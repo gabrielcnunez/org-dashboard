@@ -8,7 +8,7 @@ For this assessment students will work in a group(s) to write a full stack appli
 
 ## ERD
 
-![Final ERD](https://user-images.githubusercontent.com/32781877/149406364-2d2fe6a6-f7c9-419c-80e7-7be1a2596f85.png)
+![Final ERD](https://user-images.githubusercontent.com/32781877/206259951-fe81a650-1d90-4c28-ae7a-571f649269d9.png)
 
 
 ---
