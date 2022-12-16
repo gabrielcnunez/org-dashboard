@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Announcements from './Screens/Admin/Announcements';
+import Announcements from './Screens/Shared/Announcements';
 import Login from './Screens/Shared/Login';
 import CompanyScreen from './Screens/Admin/Company';
 import Projects from './Screens/Admin/Projects';

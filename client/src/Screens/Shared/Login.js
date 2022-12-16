@@ -12,7 +12,7 @@ const Login = () => {
     const [error, setError] = useRecoilState(errorState);
 
     const paperStyle = { justifyContent: "center", alignItems: "center", padding: 20, height: '40vh', width: "30vw", color: "#1ba098", background: "#051622", border: "1px solid #deb992", borderRadius: "5px", display: "flex", flexDirection: "column" }
-    const avatarStyle = { backgroundColor: '#1bbd7e', height: "9vh", width: "5vw" }
+    const avatarStyle = { backgroundColor: '#1bbd7e', height: "9vh", width: "9vw" }
     const btnstyle = { margin: '8px 0', background: "#051622", color: "#1ba098", border: "1px solid #1ba098", borderRadius: "5%", width: "10vw" }
     const inputStyle = {
         background: "#051622", borderBottom: "1px solid #deb992", marginBottom: "10px", textAlign: "center"
