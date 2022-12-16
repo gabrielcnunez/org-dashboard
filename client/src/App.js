@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Announcements from './Screens/Admin/Announcements';
+import Login from './Screens/Shared/Login';
+import CompanyScreen from './Screens/Admin/Company';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ color: "#1ba098", background: "#051622" }}>
+      <Routes >
+        <Route path="/" element={<Login />} />
+        <Route path="/announcements" element={<Announcements />} />
+        <Route path="/company" element={<CompanyScreen />} />
+      </Routes>
     </div>
   );
 }
