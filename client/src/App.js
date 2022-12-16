@@ -3,6 +3,9 @@ import './App.css';
 import Announcements from './Screens/Admin/Announcements';
 import Login from './Screens/Shared/Login';
 import CompanyScreen from './Screens/Admin/Company';
+import Projects from './Screens/Admin/Projects';
+import Users from './Screens/Admin/Users';
+import Teams from './Screens/Admin/Teams';
 
 function App() {
 
@@ -12,6 +15,9 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/company" element={<CompanyScreen />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/teams" element={<Teams />} />
       </Routes>
     </div>
   );
