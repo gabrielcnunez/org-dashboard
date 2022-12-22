@@ -53,10 +53,10 @@ const NavBar = () => {
                         </Link>
                     </ListItem>
                 ))}
-                <ListItem disablePadding
+                <ListItem key={"logout"} disablePadding
                     sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
                 >
-                    <ListItemButton sx={{ width: '100%' }} onClick={() => {
+                    <ListItemButton sx={{ width: '100%', textAlign: "center" }} onClick={() => {
                         setUser({});
                         localStorage.clear();
                     }}>
@@ -70,8 +70,8 @@ const NavBar = () => {
 
 
     return (
-        <div style={{ height: "8vh", color: "#1ba098", background: "#051622" }}>
-            {user.isAdmin ? <h1 style={{ color: "palevioletred", fontSize: "2rem", paddingTop: "2%" }}>Acting as Admin</h1> : null}
+        <div style={{ height: "8vh", color: "#1ba098", background: "#051622", paddingTop: ".5%" }}>
+            {user.isAdmin ? <h1 style={{ color: "palevioletred", fontSize: "1.75rem" }}>Acting as Admin</h1> : null}
             {toggled ?
                 <Button style={{ position: 'absolute', right: "2%", top: "1%", zIndex: "100" }} onClick={toggleDrawer(anchor, true)}><MenuIcon style={{ height: "5vh", width: "5vw" }} /></Button>
                 :

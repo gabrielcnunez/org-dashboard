@@ -12,6 +12,7 @@ const Announcements = () => {
         return (
             <div>
                 <NavBar />
+                <h1>Announcements</h1>
             </div>
         )
     }
