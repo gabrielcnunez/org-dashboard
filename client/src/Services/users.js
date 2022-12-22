@@ -1,7 +1,7 @@
 import api from "./api";
 
-export const validateUser = async (username, password) => {
-    const response = await api.post("/users/validate", {
+export const login = async (username, password) => {
+    const response = await api.post("/users/login", {
         username: username,
         password: password,
     });

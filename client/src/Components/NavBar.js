@@ -10,8 +10,11 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import { userState } from '../globalstate';
+import { useRecoilState } from 'recoil';
 
 const NavBar = () => {
+    const [user, setUser] = useRecoilState(userState);
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -39,7 +42,7 @@ const NavBar = () => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List style={{ textAlign: "center", background: "#051622" }} sx={{ width: '100%' }}>
-                {["Announcements", "Projects", "Teams", "Users", "Logout"].map((text, index) => (
+                {["Announcements", "Projects", "Teams", "Users"].map((text, index) => (
                     <ListItem key={text} disablePadding
                         sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
                     >
@@ -50,6 +53,16 @@ const NavBar = () => {
                         </Link>
                     </ListItem>
                 ))}
+                <ListItem disablePadding
+                    sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                >
+                    <ListItemButton sx={{ width: '100%' }} onClick={() => {
+                        setUser({});
+                        localStorage.clear();
+                    }}>
+                        <ListItemText style={{ color: "#1ba098" }} primary="Logout" />
+                    </ListItemButton>
+                </ListItem>
             </List>
             <Divider />
         </Box >
@@ -57,7 +70,8 @@ const NavBar = () => {
 
 
     return (
-        <div style={{ height: "8vh" }}>
+        <div style={{ height: "8vh", color: "#1ba098", background: "#051622" }}>
+            {user.isAdmin ? <h1 style={{ color: "palevioletred", fontSize: "2rem", paddingTop: "2%" }}>Acting as Admin</h1> : null}
             {toggled ?
                 <Button style={{ position: 'absolute', right: "2%", top: "1%", zIndex: "100" }} onClick={toggleDrawer(anchor, true)}><MenuIcon style={{ height: "5vh", width: "5vw" }} /></Button>
                 :

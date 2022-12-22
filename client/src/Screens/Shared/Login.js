@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import logo from "../../Assets/logo.png";
 import { Navigate } from "react-router-dom";
 import { errorState, userState } from "../../globalstate";
-import { validateUser } from "../../Services/users";
+import { login } from "../../Services/users";
 const Login = () => {
     const [user, setUser] = useRecoilState(userState);
     const [username, setUsername] = React.useState("");
@@ -12,7 +12,7 @@ const Login = () => {
     const [error, setError] = useRecoilState(errorState);
 
     const paperStyle = { justifyContent: "center", alignItems: "center", padding: 20, height: '40vh', width: "30vw", color: "#1ba098", background: "#051622", border: "1px solid #deb992", borderRadius: "5px", display: "flex", flexDirection: "column" }
-    const avatarStyle = { backgroundColor: '#1bbd7e', height: "9vh", width: "9vw" }
+    const avatarStyle = { backgroundColor: '#1bbd7e', height: "9vh", width: "4.5vw" }
     const btnstyle = { margin: '8px 0', background: "#051622", color: "#1ba098", border: "1px solid #1ba098", borderRadius: "5%", width: "10vw" }
     const inputStyle = {
         background: "#051622", borderBottom: "1px solid #deb992", marginBottom: "10px", textAlign: "center"
@@ -25,7 +25,7 @@ const Login = () => {
             return;
         }
 
-        const response = await validateUser(username, password).catch((err) => {
+        const response = await login(username, password).catch((err) => {
             setError({ isError: true, message: "Invalid username or password" })
         });
 
@@ -35,7 +35,16 @@ const Login = () => {
 
             if (response) {
                 setError({ isError: false, message: "" })
-                setUser({ isLoggedIn: true, isAdmin: response.isAdmin, id: response.id, username: response.credentials.username })
+                setUser({
+                    isLoggedIn: true,
+                    id: response.id,
+                    profile: response.profile,
+                    isAdmin: response.isAdmin,
+                    active: response.active,
+                    status: response.status,
+                    companies: response.companies,
+                    teams: response.teams,
+                })
             }
     }
 

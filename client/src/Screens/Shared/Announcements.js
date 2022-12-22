@@ -4,7 +4,7 @@ import NavBar from "../../Components/NavBar"
 import { userState } from "../../globalstate"
 
 const Announcements = () => {
-    const [user, setUser] = useRecoilState(userState)
+    const [user] = useRecoilState(userState)
 
     if (!user.isLoggedIn) {
         return <Navigate replace to="/" />
@@ -12,7 +12,6 @@ const Announcements = () => {
         return (
             <div>
                 <NavBar />
-                <h1>Announcements</h1>
             </div>
         )
     }

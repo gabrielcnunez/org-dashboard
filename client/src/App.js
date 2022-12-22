@@ -6,11 +6,12 @@ import CompanyScreen from './Screens/Admin/Company';
 import Projects from './Screens/Admin/Projects';
 import Users from './Screens/Admin/Users';
 import Teams from './Screens/Admin/Teams';
+import Project from './Screens/Worker/Project';
 
 function App() {
 
   return (
-    <div style={{ color: "#1ba098", background: "#051622" }}>
+    <div>
       <Routes >
         <Route path="/" element={<Login />} />
         <Route path="/announcements" element={<Announcements />} />
@@ -18,6 +19,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/users" element={<Users />} />
         <Route path="/teams" element={<Teams />} />
+        <Route path="/project" element={<Project />} />
       </Routes>
     </div>
   );

@@ -1,11 +1,16 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+
+const { persistAtom } = recoilPersist();
 
 export const userState = atom({
     key: 'userState',
     default: {
         isLoggedIn: false,
-        isAdmin: false,
-    }
+        isAdmin: true,
+    },
+    effects_UNSTABLE: [persistAtom]
 });
 
 export const announcementsState = atom({
