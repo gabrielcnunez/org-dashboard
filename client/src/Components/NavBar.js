@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { userState } from '../globalstate';
 import { useRecoilState } from 'recoil';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
 const NavBar = () => {
     const [user, setUser] = useRecoilState(userState);
@@ -33,10 +34,8 @@ const NavBar = () => {
         setToggled(!toggled);
     };
 
-    const list = (anchor) => (
+    const list = () => (
         <Box
-
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
@@ -70,22 +69,52 @@ const NavBar = () => {
 
 
     return (
-        <div style={{ height: "8vh", color: "#1ba098", background: "#051622", paddingTop: ".5%" }}>
-            {user.isAdmin ? <h1 style={{ color: "palevioletred", fontSize: "1.75rem" }}>Acting as Admin</h1> : null}
-            {toggled ?
-                <Button style={{ position: 'absolute', right: "2%", top: "1%", zIndex: "100" }} onClick={toggleDrawer(anchor, true)}><MenuIcon style={{ height: "5vh", width: "5vw" }} /></Button>
-                :
-                <Button style={{ position: 'absolute', right: "2%", top: "1%", zIndex: "100" }} onClick={toggleDrawer(anchor, false)}><CloseIcon style={{ height: "5vh", width: "5vw" }} /></Button>
-            }
-            <Drawer
-                sx={{ zIndex: "99" }}
-                anchor={anchor}
-                open={state[anchor]}
-                onClose={toggleDrawer(anchor, false)}
-            >
-                {list(anchor)}
-            </Drawer>
-        </div>
+        // <div style={{ height: "8vh", color: "#1ba098", background: "#051622", paddingTop: ".5%" }}>
+        //     {user.isAdmin ? <h1 style={{ color: "palevioletred", fontSize: "1.75rem" }}>Acting as Admin</h1> : null}
+        //     {toggled ?
+        //         <Button style={{ position: 'absolute', right: "2%", top: "1%", zIndex: "100" }} onClick={toggleDrawer(anchor, true)}><MenuIcon style={{ height: "5vh", width: "5vw" }} /></Button>
+        //         :
+        //         <Button style={{ position: 'absolute', right: "2%", top: "1%", zIndex: "100" }} onClick={toggleDrawer(anchor, false)}><CloseIcon style={{ height: "5vh", width: "5vw" }} /></Button>
+        //     }
+        //     <Drawer
+        //         sx={{ zIndex: "99" }}
+        //         anchor={anchor}
+        //         open={state[anchor]}
+        //         onClose={toggleDrawer(anchor, false)}
+        //     >
+        //         {list(anchor)}
+        //     </Drawer>
+        // </div>
+
+        <Box style={{ height: "6vh", color: "#1ba098", background: "#051622" }}>
+            <AppBar position="static">
+                <Toolbar variant="dense" style={{ background: "#051622", display: "flex", justifyContent: "flex-end" }}>
+                    <List style={{ textAlign: "center", background: "#051622" }} sx={{ width: '50%', display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+                        {["Home", "Company", "Teams", "Users"].map((text, index) => (
+                            <ListItem key={text}
+                            >
+                                <Link to={text.toLowerCase() === "home" ? "/announcements" : "/" + text.toLowerCase()} style={{ textDecoration: "none", color: "black" }}>
+                                    <ListItemButton sx={{ width: '20%', paddingRight: "2vw" }} >
+                                        <ListItemText style={{ color: "#1ba098" }} primaryTypographyProps={{ fontSize: "35px" }} primary={text} />
+                                    </ListItemButton>
+                                </Link>
+                            </ListItem>
+                        ))}
+                        <ListItem key={"logout"}
+                            sx={{ width: '10vw' }}
+                        >
+                            <ListItemButton sx={{ width: '100%', textAlign: "center", paddingRight: "2vw" }} onClick={() => {
+                                setUser({});
+                                localStorage.clear();
+                            }}>
+                                <ListItemText style={{ color: "#1ba098" }} primaryTypographyProps={{ fontSize: "35px" }} primary="Logout" />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </Toolbar>
+            </AppBar>
+        </Box>
+
     );
 }
 
