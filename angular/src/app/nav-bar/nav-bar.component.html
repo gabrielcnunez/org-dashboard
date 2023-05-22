@@ -1,0 +1,24 @@
+<mat-toolbar>
+    <mat-list role="list">
+        {["Home", "Company", "Teams", "Users"].map((text, index) => (
+        <mat-list-item role="listitem">
+            <Link to={text.toLowerCase()==="home" ? "/announcements" : "/" + text.toLowerCase()} style={{
+                textDecoration: "none" , color: "black" }}>
+            <ListItemButton sx={{ width: '20%' , paddingRight: "2vw" }}>
+                <ListItemText style={{ color: "#1ba098" }} primaryTypographyProps={{ fontSize: "35px" }}
+                    primary={text} />
+            </ListItemButton>
+            </Link>
+        </mat-list-item>
+        ))}
+        <mat-list-item role="listitem">
+            <ListItemButton sx={{ width: '100%' , textAlign: "center" , paddingRight: "2vw" }} onClick={()=> {
+                setUser({});
+                localStorage.clear();
+                }}>
+                <ListItemText style={{ color: "#1ba098" }} primaryTypographyProps={{ fontSize: "35px" }}
+                    primary="Logout" />
+            </ListItemButton>
+        </mat-list-item>
+    </mat-list>
+</mat-toolbar>
