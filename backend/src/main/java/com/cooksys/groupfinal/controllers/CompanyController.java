@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
+import com.cooksys.groupfinal.dtos.ProjectResponseDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.services.CompanyService;
 
@@ -38,7 +38,7 @@ public class CompanyController {
     }
 	
 	@GetMapping("/{companyId}/teams/{teamId}/projects") 
-	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
+	public Set<ProjectResponseDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
 	}
 

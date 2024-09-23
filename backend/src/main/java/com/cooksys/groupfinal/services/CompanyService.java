@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
+import com.cooksys.groupfinal.dtos.ProjectResponseDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 
 public interface CompanyService {
@@ -15,6 +15,6 @@ public interface CompanyService {
 
 	Set<TeamDto> getAllTeams(Long id);
 
-	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
+	Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId);
 
 }

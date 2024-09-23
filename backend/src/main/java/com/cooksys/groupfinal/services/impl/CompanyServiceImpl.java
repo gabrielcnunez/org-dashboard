@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
+import com.cooksys.groupfinal.dtos.ProjectResponseDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
@@ -82,7 +82,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Set<ProjectDto> getAllProjects(Long companyId, Long teamId) {
+	public Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId) {
 		Company company = findCompany(companyId);
 		Team team = findTeam(teamId);
 		if (!company.getTeams().contains(team)) {

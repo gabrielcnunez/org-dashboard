@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class ProjectDto {
+public class ProjectResponseDto {
 	
 	private Long id;
     
