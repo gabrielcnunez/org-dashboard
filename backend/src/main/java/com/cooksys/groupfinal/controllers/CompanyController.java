@@ -2,11 +2,13 @@ package com.cooksys.groupfinal.controllers;
 
 import java.util.Set;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
@@ -46,6 +48,7 @@ public class CompanyController {
 	}
 	
 	@PostMapping("/{companyId}/teams/{teamId}/projects")
+	@ResponseStatus(HttpStatus.CREATED)
 	public ProjectResponseDto postProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectRequestDto projectRequestDto) {
 		return companyService.postProject(companyId, teamId, projectRequestDto);
 	}
