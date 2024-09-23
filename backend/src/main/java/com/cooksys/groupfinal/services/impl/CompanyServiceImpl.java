@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.ProjectRequestDto;
 import com.cooksys.groupfinal.dtos.ProjectResponseDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Announcement;
@@ -25,6 +26,7 @@ import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.mappers.TeamMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
+import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
@@ -35,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
+	private final ProjectRepository projectRepository;
 	private final TeamRepository teamRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
@@ -92,6 +95,19 @@ public class CompanyServiceImpl implements CompanyService {
 		team.getProjects().forEach(filteredProjects::add);
 		filteredProjects.removeIf(project -> !project.isActive());
 		return projectMapper.entitiesToDtos(filteredProjects);
+	}
+
+	@Override
+	public ProjectResponseDto postProject(Long companyId, Long teamId, ProjectRequestDto projectRequestDto) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		Project projectToPost = projectMapper.requestDtoToEntity(projectRequestDto);
+		projectToPost.setTeam(team);
+		
+		return projectMapper.entityToDto(projectRepository.saveAndFlush(projectToPost));
 	}
 
 }
