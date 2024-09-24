@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         }
 
         //Set<User> userSet = new HashSet<>(userRepository.findAll());
-        List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAsc();
+        List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAscProfileFirstNameAsc();
         return basicUserMapper.entitiesToBasicUserDtos(userList);
     }
 }
