@@ -1,1 +1,29 @@
-<p>teams works!</p>
+<body>
+    <div class="container">
+  
+    <h1 style="padding-bottom: 1em; letter-spacing: 1px">Teams</h1>
+    <div style ="display: flex; flex-direction: row; width: 1200px; flex-wrap: wrap;">
+      <div *ngFor="let team of teams; index as i" >
+        <div class ="card">
+          <div class ="card-content-name">
+            <div style="color:white; background-color: #0B2D45; margin-right: 200px;">{{team.name}}</div>
+            
+              <div style="font-size:x-small; 
+              color:grey; background-color: #0B2D45;"># Of Projects:
+              </div>
+            </div>
+            <hr>
+            <p style="color:grey; background-color: #0B2D45;">Members</p>
+            <div style ="display: flex; flex-direction: row;width: 313px; flex-wrap: wrap; background-color: #0B2D45;">
+              <div style="background-color: #0B2D45;" *ngFor="let member of team.members" >
+                <div class = "card-content-member" >{{member}}</div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- button only displays for admins -->
+      <button (click) = "onSubmit()">New Team</button>
+    </div>
+  
+    </div>
+  </body>
