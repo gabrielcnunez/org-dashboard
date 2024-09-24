@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import lombok.Data;
@@ -22,8 +23,8 @@ public class Announcement {
 	@GeneratedValue
 	private Long id;
 	
-	@CreatedDate
-    private Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+	@CreationTimestamp
+    private Timestamp date;
 	
 	private String title;
 	
