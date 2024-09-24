@@ -15,6 +15,7 @@ header {
   font-size: 1em;
   cursor: pointer;
   border: none;
+  background: none;
 }
 
 .nav-button:hover {
