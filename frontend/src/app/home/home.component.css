@@ -1,0 +1,37 @@
+.container {
+  width: 60em;
+  height: 45em;
+  margin: 1em auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  border: 2px solid #ffffff;
+/*  this is unused just for reference*/
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  font-size: 2em;
+  text-align: center;
+  margin: 1em auto;
+}
+
+.create-announcement-button {
+  border: none;
+  color: white;
+  background-color: #1BA098;
+  border-radius: 100px;
+  padding: 1em 2em;
+  cursor: pointer;
+  display: block;
+  margin: 1em auto;
+}

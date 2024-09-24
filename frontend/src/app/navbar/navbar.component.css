@@ -1,0 +1,24 @@
+header {
+  border-bottom: 1px solid #ffffff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  font-size: 1.2em;
+}
+
+.nav-button {
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.nav-button:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}

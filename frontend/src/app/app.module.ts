@@ -9,6 +9,8 @@ import { TeamsComponent } from './teams/teams.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UsersComponent } from './users/users.component';
 import { CompanyComponent } from './company/company.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AnnouncementCardComponent } from './home/announcement-card/announcement-card.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { CompanyComponent } from './company/company.component';
     TeamsComponent,
     ProjectsComponent,
     UsersComponent,
-    CompanyComponent
+    CompanyComponent,
+    NavbarComponent,
+    AnnouncementCardComponent
   ],
   imports: [
     BrowserModule,
