@@ -62,11 +62,31 @@ public class CompanyServiceImpl implements CompanyService {
     }
 	
 	private Project findProject(Long id) {
-        Optional<Project> project = projectRepository.findById(id);
+		Optional<Project> project = projectRepository.findById(id);
         if (project.isEmpty()) {
             throw new NotFoundException("A project with the provided id does not exist.");
         }
         return project.get();
+	}
+	
+	private Team findTeamInCompany(Long companyId, Long teamId) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		
+		return team;
+	}
+	
+	private Project findProjectInTeam(Long companyId, Long teamId, Long projectId) {
+		Team team = findTeamInCompany(companyId, teamId);
+		Project project = findProject(projectId);
+		if (!team.getProjects().contains(project)) {
+			throw new NotFoundException("A project with id " + projectId + " does not exist on team with id " + teamId + ".");
+		}
+        
+		return project;
     }
 	
 	@Override
@@ -95,24 +115,22 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId) {
-		Company company = findCompany(companyId);
-		Team team = findTeam(teamId);
-		if (!company.getTeams().contains(team)) {
-			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
-		}
+		Team team = findTeamInCompany(companyId, teamId);
 		Set<Project> filteredProjects = new HashSet<>();
 		team.getProjects().forEach(filteredProjects::add);
-		filteredProjects.removeIf(project -> !project.isActive());
+//		filteredProjects.removeIf(project -> !project.isActive()); <-- Leaving .removeIf method commented out in case FE wants to use it
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
 
 	@Override
+	public ProjectResponseDto getProject(Long companyId, Long teamId, Long projectId) {
+		Project project = findProjectInTeam(companyId, teamId, projectId);
+		return projectMapper.entityToDto(project);
+	}
+	
+	@Override
 	public ProjectResponseDto postProject(Long companyId, Long teamId, ProjectRequestDto projectRequestDto) {
-		Company company = findCompany(companyId);
-		Team team = findTeam(teamId);
-		if (!company.getTeams().contains(team)) {
-			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
-		}
+		Team team = findTeamInCompany(companyId, teamId);
 		Project projectToPost = projectMapper.requestDtoToEntity(projectRequestDto);
 		projectToPost.setTeam(team);
 		
@@ -121,12 +139,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public ProjectResponseDto editProject(Long companyId, Long teamId, Long projectId, ProjectRequestDto projectRequestDto) {
-		Company company = findCompany(companyId);
-		Team team = findTeam(teamId);
-		if (!company.getTeams().contains(team)) {
-			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
-		}
-		Project projectToEdit = findProject(projectId);
+		Project projectToEdit = findProjectInTeam(companyId, teamId, projectId);
 		projectToEdit.setName(projectRequestDto.getName());
 		projectToEdit.setDescription(projectRequestDto.getDescription());
 		projectToEdit.setActive(projectRequestDto.isActive());

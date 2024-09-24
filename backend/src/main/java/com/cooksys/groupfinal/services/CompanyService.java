@@ -18,6 +18,8 @@ public interface CompanyService {
 
 	Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId);
 
+	ProjectResponseDto getProject(Long companyId, Long teamId, Long projectId);
+
 	ProjectResponseDto postProject(Long companyId, Long teamId, ProjectRequestDto projectRequestDto);
 
 	ProjectResponseDto editProject(Long companyId, Long teamId, Long companyID, ProjectRequestDto projectRequestDto);

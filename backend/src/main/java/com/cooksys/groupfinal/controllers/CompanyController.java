@@ -48,6 +48,11 @@ public class CompanyController {
 		return companyService.getAllProjects(companyId, teamId);
 	}
 	
+	@GetMapping("/{companyId}/teams/{teamId}/projects/{projectId}") 
+	public ProjectResponseDto getProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId) {
+		return companyService.getProject(companyId, teamId, projectId);
+	}
+	
 	@PostMapping("/{companyId}/teams/{teamId}/projects")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProjectResponseDto postProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectRequestDto projectRequestDto) {
