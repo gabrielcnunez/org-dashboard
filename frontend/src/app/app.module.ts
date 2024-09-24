@@ -11,6 +11,8 @@ import { UsersComponent } from './users/users.component';
 import { CompanyComponent } from './company/company.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AnnouncementCardComponent } from './home/announcement-card/announcement-card.component';
+import { AnnouncementOverlayComponent } from './home/announcement-overlay/announcement-overlay.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,11 +24,13 @@ import { AnnouncementCardComponent } from './home/announcement-card/announcement
     UsersComponent,
     CompanyComponent,
     NavbarComponent,
-    AnnouncementCardComponent
+    AnnouncementCardComponent,
+    AnnouncementOverlayComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

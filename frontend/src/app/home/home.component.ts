@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
+import { AnnouncementOverlayComponent } from './announcement-overlay/announcement-overlay.component';
 
 @Component({
   selector: 'app-home',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  @ViewChild(AnnouncementOverlayComponent) overlay!: AnnouncementOverlayComponent;
+
+  clickNewButton() {
+    this.overlay.open();
+  }
 }
