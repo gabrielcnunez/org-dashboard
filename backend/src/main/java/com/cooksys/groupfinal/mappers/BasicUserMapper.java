@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.mappers;
 
+import java.util.List;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.BasicUserDto;
@@ -14,7 +15,9 @@ public interface BasicUserMapper {
     BasicUserDto entityToBasicUserDto(User user);
     
     Set<BasicUserDto> entitiesToBasicUserDtos(Set<User> users);
-    
+
+    List<BasicUserDto> entitiesToBasicUserDtos(List<User> users);
+
     User requestDtoToEntity(UserRequestDto userRequestDto);
 
 }

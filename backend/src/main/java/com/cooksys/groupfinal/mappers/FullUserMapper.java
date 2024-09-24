@@ -17,4 +17,5 @@ public interface FullUserMapper {
 
   User requestDtoToEntity(UserRequestDto userRequestDto);
 
+  User fullUserDtoToEntity(FullUserDto fullUserDto);
 }

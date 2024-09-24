@@ -1,7 +1,10 @@
 package com.cooksys.groupfinal.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.cooksys.groupfinal.dtos.BasicUserDto;
+import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
@@ -23,7 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
-  private final FullUserMapper fullUserMapper;
+    private final FullUserMapper fullUserMapper;
+    private final BasicUserMapper basicUserMapper;
 	private final CredentialsMapper credentialsMapper;
 	
 	private User findUser(String username) {
@@ -50,11 +54,18 @@ public class UserServiceImpl implements UserService {
         }
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
-	
-	
-	
-	
-	
-	
 
+    @Override
+    public List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto) {
+        FullUserDto requesterDto = login(credentialsDto);
+        User requester = fullUserMapper.fullUserDtoToEntity(requesterDto);
+
+        if (!requester.isAdmin()) {
+            throw new NotAuthorizedException("This user is not an administrator.");
+        }
+
+        //Set<User> userSet = new HashSet<>(userRepository.findAll());
+        List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAscProfileFirstNameAsc();
+        return basicUserMapper.entitiesToBasicUserDtos(userList);
+    }
 }
