@@ -57,7 +57,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto) {
-        login(credentialsDto);
+        FullUserDto requesterDto = login(credentialsDto);
+        User requester = fullUserMapper.fullUserDtoToEntity(requesterDto);
+
+        if (!requester.isAdmin()) {
+            throw new NotAuthorizedException("This user is not an administrator.");
+        }
+
         //Set<User> userSet = new HashSet<>(userRepository.findAll());
         List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAsc();
         return basicUserMapper.entitiesToBasicUserDtos(userList);
