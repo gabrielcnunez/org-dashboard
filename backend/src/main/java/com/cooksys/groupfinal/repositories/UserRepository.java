@@ -13,5 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByCredentialsUsernameAndActiveTrue(String username);
 
-	List<User> findAllByOrderByProfileLastNameAscActiveAsc();
+	List<User> findAllByOrderByActiveDescProfileLastNameAsc();
 }

@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto) {
         login(credentialsDto);
         //Set<User> userSet = new HashSet<>(userRepository.findAll());
-        List<User> userList = userRepository.findAllByOrderByProfileLastNameAscActiveAsc();
+        List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAsc();
         return basicUserMapper.entitiesToBasicUserDtos(userList);
     }
 }
