@@ -20,4 +20,6 @@ public interface CompanyService {
 
 	ProjectResponseDto postProject(Long companyId, Long teamId, ProjectRequestDto projectRequestDto);
 
+	ProjectResponseDto editProject(Long companyId, Long teamId, Long companyID, ProjectRequestDto projectRequestDto);
+
 }

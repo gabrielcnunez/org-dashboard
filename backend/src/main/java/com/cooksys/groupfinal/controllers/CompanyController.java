@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,6 +52,11 @@ public class CompanyController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProjectResponseDto postProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectRequestDto projectRequestDto) {
 		return companyService.postProject(companyId, teamId, projectRequestDto);
+	}
+	
+	@PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}/edit")
+	public ProjectResponseDto editProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectRequestDto projectRequestDto) {
+		return companyService.editProject(companyId, teamId, projectId, projectRequestDto);
 	}
 
 }

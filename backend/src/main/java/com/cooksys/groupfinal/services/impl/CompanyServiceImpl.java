@@ -60,6 +60,14 @@ public class CompanyServiceImpl implements CompanyService {
         return team.get();
     }
 	
+	private Project findProject(Long id) {
+        Optional<Project> project = projectRepository.findById(id);
+        if (project.isEmpty()) {
+            throw new NotFoundException("A project with the provided id does not exist.");
+        }
+        return project.get();
+    }
+	
 	@Override
 	public Set<FullUserDto> getAllUsers(Long id) {
 		Company company = findCompany(id);
@@ -108,6 +116,21 @@ public class CompanyServiceImpl implements CompanyService {
 		projectToPost.setTeam(team);
 		
 		return projectMapper.entityToDto(projectRepository.saveAndFlush(projectToPost));
+	}
+
+	@Override
+	public ProjectResponseDto editProject(Long companyId, Long teamId, Long projectId, ProjectRequestDto projectRequestDto) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		Project projectToEdit = findProject(projectId);
+		projectToEdit.setName(projectRequestDto.getName());
+		projectToEdit.setDescription(projectRequestDto.getDescription());
+		projectToEdit.setActive(projectRequestDto.isActive());
+		
+		return projectMapper.entityToDto(projectRepository.saveAndFlush(projectToEdit));
 	}
 
 }
