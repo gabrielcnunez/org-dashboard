@@ -5,7 +5,9 @@
             <h1>Projects for</h1>
         </div>
         <div>
+            <!-- button only displays for admins -->
             <button style="background-color: #1BA098; color: white;">New</button>
+            
             <div *ngFor="let project of projects; index as i" >
                 <hr>
                 <div style="display: flex; flex-direction: row; ">

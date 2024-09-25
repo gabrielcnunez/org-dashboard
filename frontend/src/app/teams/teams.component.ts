@@ -41,4 +41,8 @@ export class TeamsComponent {
 
   onSubmit() {
   }
+
+  editTeam(i: number) {
+    this.router.navigate(["projects"]);
+  }
 }

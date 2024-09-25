@@ -8,15 +8,7 @@
     
   }
 
-  .card {
-    background-color: #0B2D45;
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    width: 313px;
-    height: 241px;
-    margin: 20px;
-  }
+  
 
   
 .card-content-name {
@@ -61,7 +53,18 @@
     padding: 0;
 }
 
-button {
+
+.edit-button {
+  background-color: #0B2D45;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  width: 313px;
+  height: 241px;
+  margin: 20px;
+  cursor: pointer;
+}
+.add-button {
   display: flex;
   background-color: #0d1118; 
   color:#DEB992;
@@ -72,4 +75,5 @@ button {
   height: 241px;
   margin: 20px;
   font-size: medium;
+  cursor: pointer;
 }
