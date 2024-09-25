@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HomeComponent } from "../home.component";
 
 @Component({
   selector: 'app-announcement-overlay',
@@ -9,6 +10,8 @@ export class AnnouncementOverlayComponent {
 
   isHidden = false;
   announcement = { title: '', message: '' };
+
+  constructor(private homeComponent: HomeComponent) {}
 
   open() {
     this.isHidden = true;
@@ -24,7 +27,8 @@ export class AnnouncementOverlayComponent {
       return; // Prevent submission if fields are empty
     }
 
-    console.log('New Announcement:', this.announcement);
+    // console.log('New Announcement:', this.announcement);
+    this.homeComponent.addNewAnnouncement(this.announcement.message);
     this.close();
   }
 }
