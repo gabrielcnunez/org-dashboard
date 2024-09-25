@@ -89,10 +89,6 @@ public class TeamServiceImpl implements TeamService {
         //verify credentials
         userService.loginAdmin(credentialsDto);
 
-        //verify company and teammates
-        Company company = companyService.findCompany(companyId);
-        Set<User> teammates = findTeammates(company, teamRequestDto.getTeammateIds());
-
         //verify teamName and teamDescription are provided
         String teamName = teamRequestDto.getName();
         String teamDescription = teamRequestDto.getDescription();
@@ -104,6 +100,10 @@ public class TeamServiceImpl implements TeamService {
         if (teamDescription == null || teamDescription.isEmpty()) {
             throw new BadRequestException("A team description must be provided.");
         }
+
+        //verify company and teammates
+        Company company = companyService.findCompany(companyId);
+        Set<User> teammates = findTeammates(company, teamRequestDto.getTeammateIds());
 
         //create the team
         team.setName(teamName);
