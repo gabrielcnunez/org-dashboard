@@ -23,9 +23,11 @@ public class UserController {
     }
 
     @PostMapping("/create")
+	@CrossOrigin(origins="*")
     public BasicUserDto createUser(@RequestBody CreateUserDto createUserDto) { return userService.createUser(createUserDto); }
 
     @GetMapping("")
+	@CrossOrigin(origins="*")
     public List<BasicUserDto> getAllUsers(@RequestBody CredentialsDto credentialsDto) { return userService.getAllUsers(credentialsDto); }
 
 
