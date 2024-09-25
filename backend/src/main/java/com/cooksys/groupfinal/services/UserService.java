@@ -9,6 +9,10 @@ public interface UserService {
 
 	FullUserDto login(CredentialsDto credentialsDto);
 
+	void loginAdmin(CredentialsDto credentialsDto);
+
+	User findUser(Long id);
+
 	//BasicUserDto createUser(UserRequestDto userRequestDto);
 	BasicUserDto createUser(CreateUserDto createUserDto);
 

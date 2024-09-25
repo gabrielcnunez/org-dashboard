@@ -7,6 +7,7 @@ import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectRequestDto;
 import com.cooksys.groupfinal.dtos.ProjectResponseDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.entities.Company;
 
 public interface CompanyService {
 
@@ -24,4 +25,5 @@ public interface CompanyService {
 
 	ProjectResponseDto editProject(Long companyId, Long teamId, Long companyID, ProjectRequestDto projectRequestDto);
 
+	Company findCompany(Long id);
 }

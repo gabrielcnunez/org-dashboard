@@ -45,7 +45,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
 	
-	private Company findCompany(Long id) {
+	public Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
         if (company.isEmpty()) {
             throw new NotFoundException("A company with the provided id does not exist.");
