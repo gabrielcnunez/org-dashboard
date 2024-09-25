@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
+import { TeamsOverlayComponent } from './teams-overlay/teams-overlay.component';
 import Team from '../models/team';
 
 
@@ -37,9 +38,15 @@ export class TeamsComponent {
     members: []
     }
   ]
+  @ViewChild(TeamsOverlayComponent) overlay!: TeamsOverlayComponent;
   constructor(private router: Router) {}
 
+  
+
   onSubmit() {
+    console.log("beep")
+    this.overlay.open();
+    
   }
 
   editTeam(i: number) {

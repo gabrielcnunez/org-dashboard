@@ -14,6 +14,7 @@ import { AnnouncementCardComponent } from './home/announcement-card/announcement
 import { AnnouncementOverlayComponent } from './home/announcement-overlay/announcement-overlay.component';
 import {FormsModule} from "@angular/forms";
 import { UserOverlayComponent } from './users/user-overlay/user-overlay.component';
+import { TeamsOverlayComponent } from './teams/teams-overlay/teams-overlay.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { UserOverlayComponent } from './users/user-overlay/user-overlay.componen
     NavbarComponent,
     AnnouncementCardComponent,
     AnnouncementOverlayComponent,
-    UserOverlayComponent
+    UserOverlayComponent,
+    TeamsOverlayComponent
   ],
   imports: [
     BrowserModule,
