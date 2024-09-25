@@ -28,11 +28,19 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
     private final BasicUserMapper basicUserMapper;
 	private final CredentialsMapper credentialsMapper;
-	
+
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
         if (user.isEmpty()) {
             throw new NotFoundException("The username provided does not belong to an active user.");
+        }
+        return user.get();
+    }
+
+    public User findUser(Long userId) {
+        Optional<User> user = userRepository.findByIdAndActiveTrue(userId);
+        if (user.isEmpty()) {
+            throw new NotFoundException("The ID " + userId + " does not belong to an active user.");
         }
         return user.get();
     }
@@ -54,7 +62,8 @@ public class UserServiceImpl implements UserService {
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
 
-    private void loginAdmin(CredentialsDto credentialsDto) {
+    @Override
+    public void loginAdmin(CredentialsDto credentialsDto) {
         FullUserDto requesterDto = login(credentialsDto);
         User requester = fullUserMapper.fullUserDtoToEntity(requesterDto);
 

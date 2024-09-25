@@ -1,15 +1,21 @@
 package com.cooksys.groupfinal.dtos;
 
+import java.util.Set;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class CreateUserDto {
+public class TeamRequestDto {
 
     private CredentialsDto credentials;
 
-    private UserRequestDto user;
+    private String name;
+    
+    private String description;
+    
+    private Set<Long> teammateIds;
 
     private Long companyId;
 
