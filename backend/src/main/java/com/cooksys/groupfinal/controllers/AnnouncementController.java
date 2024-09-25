@@ -24,9 +24,9 @@ public class AnnouncementController {
 	
 	@GetMapping
 	@CrossOrigin(origins="*")
-    public Set<AnnouncementDto> getAllAnnouncements() {
-        return announcementService.getAllAnnouncements();
-    }
+  public Set<AnnouncementDto> getAllAnnouncements() {
+      return announcementService.getAllAnnouncements();
+  }
 	
 	@PostMapping("/company/{companyId}")
 	@CrossOrigin(origins="*")
