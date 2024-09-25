@@ -2,10 +2,13 @@ package com.cooksys.groupfinal.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.exceptions.ConflictException;
 import com.cooksys.groupfinal.mappers.BasicUserMapper;
+import com.cooksys.groupfinal.services.CompanyService;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.entities.Credentials;
@@ -28,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
     private final BasicUserMapper basicUserMapper;
 	private final CredentialsMapper credentialsMapper;
+    private final CompanyService companyService;
 
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -109,8 +113,13 @@ public class UserServiceImpl implements UserService {
 
         checkUserExists(userRequestDto.getCredentials().getUsername());
 
+        Company company = companyService.findCompany(createUserDto.getCompanyId());
+
         User created = basicUserMapper.requestDtoToEntity(userRequestDto);
         created.setActive(true);
+        Set<Company> companies = created.getCompanies();
+        companies.add(company);
+        created.setCompanies(companies);
 
         return basicUserMapper.entityToBasicUserDto(userRepository.saveAndFlush(created));
     }
