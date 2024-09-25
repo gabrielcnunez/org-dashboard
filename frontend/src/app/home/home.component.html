@@ -5,9 +5,14 @@
   <button class="create-announcement-button" (click)="clickNewButton()">New</button>
   <app-announcement-overlay></app-announcement-overlay>
 
-  <app-announcement-card></app-announcement-card>
-  <app-announcement-card></app-announcement-card>
-  <app-announcement-card></app-announcement-card>
-  <app-announcement-card></app-announcement-card>
+  <div *ngFor="let announcement of announcements">
+
+    <app-announcement-card
+      [user]="announcement.user"
+      [date]="announcement.date"
+      [description]="announcement.description">
+    </app-announcement-card>
+
+  </div>
 
 </body>

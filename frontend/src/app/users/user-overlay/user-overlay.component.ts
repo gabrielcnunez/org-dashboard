@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UsersComponent } from "../users.component";
 
 @Component({
   selector: 'app-user-overlay',
@@ -9,6 +10,8 @@ export class UserOverlayComponent {
 
   isHidden = false;
   user = { firstname: '', lastname: '', email: '', phone: '', password: '', confirmPassword: '', admin: false };
+
+  constructor(private userComponent: UsersComponent) {}
 
   open() {
     this.isHidden = true;
@@ -21,10 +24,9 @@ export class UserOverlayComponent {
 
   onSubmit() {
     if (this.checkEmptyFields()) {
-      console.log("empty fields")
       return;
     }
-    console.log('New User:', this.user);
+    this.userComponent.addNewUser(this.user);
     this.close();
   }
 
