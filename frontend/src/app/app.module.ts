@@ -15,6 +15,7 @@ import { AnnouncementOverlayComponent } from './home/announcement-overlay/announ
 import {FormsModule} from "@angular/forms";
 import { UserOverlayComponent } from './users/user-overlay/user-overlay.component';
 import { TeamsOverlayComponent } from './teams/teams-overlay/teams-overlay.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TeamsOverlayComponent } from './teams/teams-overlay/teams-overlay.compo
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
