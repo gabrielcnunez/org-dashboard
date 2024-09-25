@@ -44,7 +44,7 @@ export class TeamsComponent {
   
 
   onSubmit() {
-    console.log("beep")
+    
     this.overlay.open();
     
   }
