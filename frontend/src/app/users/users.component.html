@@ -1,1 +1,33 @@
-<p>users works!</p>
+<body>
+
+  <header>User Registry</header>
+
+  <button class="add-user-button" (click)="clickAddButton()">Add User</button>
+  <app-user-overlay></app-user-overlay>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Active</th>
+        <th>Admin</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users">
+
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td [ngClass]="user.active ? 'green-text' : 'red-text'">{{ user.active ? 'YES' : 'NO' }}</td>
+        <td [ngClass]="user.admin ? 'green-text' : 'red-text'">{{ user.admin ? 'YES' : 'NO' }}</td>
+        <td>{{ user.status }}</td>
+
+      </tr>
+    </tbody>
+  </table>
+
+
+</body>
