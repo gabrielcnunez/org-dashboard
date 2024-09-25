@@ -1,0 +1,54 @@
+<div class="overlay" *ngIf="isHidden">
+
+    <div class="overlay-content">
+  
+      <form (ngSubmit)="onSubmit()">
+  
+        <div class="form-group">
+          <label style="color: #DEB992;" for="teamname">Team Name:</label>
+          <input id="teamname" [(ngModel)]="team.name" name="teamname" required />
+        </div>
+  
+        <div class="form-group">
+          <label style="color: #DEB992;" for="description">Description:</label>
+          <input id="description" [(ngModel)]="team.description" name="description" required />
+        </div>
+
+  
+          
+      <h2 style="color: #DEB992;">Select Members</h2>
+
+      <div class="dropdown">
+
+        <button class="dropbtn">Pick an option</button>
+  
+        <div class="dropdown-content">
+          <a>Fedex</a>
+          <a>Cook Systems</a>
+          <a>Google</a>
+        </div>
+  
+      </div>
+
+      <div style="position: relative;">
+        <div style=" background-color: #0d1118; display: flex; flex-direction: row; position:relative; left: 11.5em;" *ngFor="let member of team.members" >
+                <div class = "card-content-member" >{{member}}</div>
+                <div (click)="removeMember(member)" id="mdiv">
+                  <div class="mdiv">
+                    <div class="md"></div>
+                  </div>
+                </div>
+        </div>
+      </div>
+
+        
+      <div class="button-container">
+        <button type="button" (click)="close()">Close</button>
+        <button type="submit">Create</button>
+      </div>
+
+      </form>
+  
+  </div>
+  
+</div>

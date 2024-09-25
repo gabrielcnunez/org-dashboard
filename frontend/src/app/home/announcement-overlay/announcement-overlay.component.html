@@ -1,0 +1,28 @@
+<div class="overlay" *ngIf="isHidden">
+
+  <div class="overlay-content">
+
+    <h2>Create Announcement</h2>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <div>
+        <label for="title">Title:</label>
+        <input id="title" [(ngModel)]="announcement.title" name="title" required />
+      </div>
+
+      <div>
+        <label for="message">Message:</label>
+        <textarea id="message" [(ngModel)]="announcement.message" name="message" required></textarea>
+      </div>
+
+      <div class="button-container">
+        <button type="button" (click)="close()">Close</button>
+        <button type="submit">Create</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

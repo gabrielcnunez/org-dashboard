@@ -16,5 +16,5 @@ For this group project students will work to write a full stack web application.
 
 ## Wireframe
 
-[Figma Wireframe Link](https://www.figma.com/file/huwXGJxW6BCIbk4p2QcZG2/Final-Prototype?type=design&node-id=0-1&mode=design&t=1Ef7iFB5zY6Kjdyb-0)
 
+[Figma Wireframe Link](https://www.figma.com/file/huwXGJxW6BCIbk4p2QcZG2/Final-Prototype?type=design&node-id=0-1&mode=design&t=zTfJ355BqtKPGq2j-0)

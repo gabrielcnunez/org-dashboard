@@ -1,0 +1,25 @@
+<body>
+    <div class="container">
+        <div style="display: flex; flex-direction: row;">
+            <a style= "margin-right: 200px;" (click) = "goBack()">&lt; back</a>
+            <h1>Projects for</h1>
+        </div>
+        <div>
+            <!-- button only displays for admins -->
+            <button style="background-color: #1BA098; color: white;">New</button>
+            
+            <div *ngFor="let project of projects; index as i" >
+                <hr>
+                <div style="display: flex; flex-direction: row; ">
+                    <div style="color: white; font-size: x-large; margin-right: 20px;">{{project.name}}</div>
+                    <div style="color: green; font-size: smaller;" *ngIf="project.active == true;else other_content">active</div>
+                    <ng-template #other_content>
+                        <div  style="color: darkred; font-size: smaller;">inactive</div>
+                    </ng-template>
+                </div>
+                    <div style="color: grey; font-size: medium;"><br>{{project.description}}</div>
+                    <button>Edit</button>
+            </div>
+        </div>
+    </div>
+</body>
