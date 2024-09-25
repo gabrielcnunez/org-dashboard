@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.controllers.advice;
 
+import com.cooksys.groupfinal.exceptions.ConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,6 +32,12 @@ public class GroupFinalControllerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorDto handleNotAuthorizedException(NotAuthorizedException notAuthorizedException) {
         return new ErrorDto(notAuthorizedException.getMessage());
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto handleConflictException(ConflictException conflictException) {
+        return new ErrorDto(conflictException.getMessage());
     }
 
 }

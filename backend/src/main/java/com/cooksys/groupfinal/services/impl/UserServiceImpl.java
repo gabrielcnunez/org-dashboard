@@ -3,12 +3,11 @@ package com.cooksys.groupfinal.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.cooksys.groupfinal.dtos.BasicUserDto;
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.exceptions.ConflictException;
 import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import org.springframework.stereotype.Service;
 
-import com.cooksys.groupfinal.dtos.CredentialsDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.entities.Credentials;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
@@ -55,14 +54,61 @@ public class UserServiceImpl implements UserService {
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
 
-    @Override
-    public List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto) {
+    private void loginAdmin(CredentialsDto credentialsDto) {
         FullUserDto requesterDto = login(credentialsDto);
         User requester = fullUserMapper.fullUserDtoToEntity(requesterDto);
 
         if (!requester.isAdmin()) {
             throw new NotAuthorizedException("This user is not an administrator.");
         }
+    }
+
+    private void checkUserExists(String username) {
+        Optional<User> foundOptional = userRepository.findByCredentialsUsername(username);
+
+        if (foundOptional.isPresent()) {
+            User found = foundOptional.get();
+
+            if (!found.isActive()) {
+                throw new ConflictException("An inactive user with this username already exists.");
+            }
+
+            throw new ConflictException("A user with this username already exists.");
+        }
+    }
+
+    private void checkCredentialsDto(CredentialsDto credentialsDto) {
+        String username = credentialsDto.getUsername();
+        String password = credentialsDto.getPassword();
+        if (username == null || username.isEmpty()) {
+            throw new BadRequestException("A username must be provided.");
+        }
+        if (password == null || password.isEmpty()) {
+            throw new BadRequestException("A password must be provided.");
+        }
+    }
+
+    @Override
+    public BasicUserDto createUser(CreateUserDto createUserDto) {
+    //public BasicUserDto createUser(UserRequestDto userRequestDto) {
+        CredentialsDto credentialsDto = createUserDto.getCredentials();
+        UserRequestDto userRequestDto = createUserDto.getUser();
+
+        loginAdmin(credentialsDto);
+
+        checkCredentialsDto(userRequestDto.getCredentials());
+
+        checkUserExists(userRequestDto.getCredentials().getUsername());
+
+        User created = basicUserMapper.requestDtoToEntity(userRequestDto);
+        created.setActive(true);
+
+        return basicUserMapper.entityToBasicUserDto(userRepository.saveAndFlush(created));
+    }
+
+    @Override
+    public List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto) {
+        loginAdmin(credentialsDto);
 
         //Set<User> userSet = new HashSet<>(userRepository.findAll());
         List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAscProfileFirstNameAsc();
