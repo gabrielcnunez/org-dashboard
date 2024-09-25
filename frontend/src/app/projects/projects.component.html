@@ -6,7 +6,8 @@
         </div>
         <div>
             <!-- button only displays for admins -->
-            <button style="background-color: #1BA098; color: white;">New</button>
+            <button (click)="newProject()" style="background-color: #1BA098; color: white;">New</button>
+            <app-projects-overlay></app-projects-overlay>
             
             <div *ngFor="let project of projects; index as i" >
                 <hr>
@@ -17,8 +18,9 @@
                         <div  style="color: darkred; font-size: smaller;">inactive</div>
                     </ng-template>
                 </div>
-                    <div style="color: grey; font-size: medium;"><br>{{project.description}}</div>
-                    <button>Edit</button>
+                    <div  style="color: grey; font-size: medium;"><br>{{project.description}}</div>
+                    <button (click)="editProject(project)" >Edit</button>
+                    
             </div>
         </div>
     </div>
