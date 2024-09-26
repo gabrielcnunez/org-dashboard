@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProjectsComponent } from "../projects.component";
 import Project from 'src/app/models/project';
 
 @Component({
@@ -10,6 +11,9 @@ export class ProjectsOverlayComponent {
   isHidden = false;
   edit = false;
   project: Project = {name: '', description: '', active: true}
+  selectedStatus: boolean | null = null
+
+  constructor(private projectsComponent: ProjectsComponent) {}
 
 
   open(edit: boolean) {
@@ -21,6 +25,12 @@ export class ProjectsOverlayComponent {
     this.isHidden = false;
     this.edit = false;
     this.project = {name: '', description: '', active: true}
+    this.selectedStatus = null
+  }
+
+  setActiveStatus(status: boolean) {
+    this.project.active = status;
+    this.selectedStatus = status;
   }
 
   onSubmit() {
@@ -28,6 +38,13 @@ export class ProjectsOverlayComponent {
       console.log("empty fields")
       return;
     }
+
+    if (this.edit) {
+      this.projectsComponent.updateProject(this.project)
+    } else {
+      // Create a new project method goes here
+    }
+
     this.close()
   }
 

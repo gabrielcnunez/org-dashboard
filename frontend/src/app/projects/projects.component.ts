@@ -21,7 +21,7 @@ export class ProjectsComponent {
 
   loadAllProjects() {
     // number "6" will be replaced with current company 
-    this.apiService.getCompanyTeamProject(6, Number(localStorage.getItem("currTeam")))
+    this.apiService.getCompanyTeamProject(6, 11)
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach(item => {
@@ -56,11 +56,24 @@ export class ProjectsComponent {
   editProject(project: Project) {
     this.overlay.open(true);
     this.overlay.project = project;
+    
+  }
+
+  updateProject(project: Project) {
     if (!this.overlay.checkEmptyFields()) {
-      console.log(this.overlay.project)
-      let i: number = this.projects.indexOf(project);
-      this.projects[i] = this.overlay.project;
-      // add project to backend
+  
+      const updatedProject = this.overlay.project;
+      const projectId = updatedProject.id!;
+  
+      this.apiService.updateProject(6, 11, 30, updatedProject)
+        .then(() => {
+          let i: number = this.projects.indexOf(project);
+          this.projects[i] = updatedProject;
+          console.log('Project updated successfully');
+        })
+        .catch(error => {
+          console.log('Error updating project:', error);
+        });
     }
   }
 
