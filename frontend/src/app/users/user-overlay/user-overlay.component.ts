@@ -57,7 +57,7 @@ export class UserOverlayComponent {
         },
         admin: false,
       },
-      companyId: 7
+      companyId: this.userComponent.companyId
     };
   }
 
