@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { AnnouncementOverlayComponent } from './announcement-overlay/announcement-overlay.component';
+import { ApiService } from "../../services/api.service";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,11 @@ import { AnnouncementOverlayComponent } from './announcement-overlay/announcemen
 export class HomeComponent implements OnInit {
 
   @ViewChild(AnnouncementOverlayComponent) overlay!: AnnouncementOverlayComponent;
-  announcements = [{ user: '', date: '', description: '' }]
+  // announcements = [{ user: '', date: '', description: '' }]
+  announcements: any[] = []
+
+
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
     this.loadAllAnnouncements()
@@ -20,16 +25,28 @@ export class HomeComponent implements OnInit {
   }
 
   loadAllAnnouncements() {
-    this.announcements = [
-      { user: 'John Doe1', date: 'September 23, 2024', description: 'This is a description inside of the announcement card1.' },
-      { user: 'John Doe2', date: 'September 23, 2024', description: 'This is a description inside of the announcement card2.' },
-      { user: 'John Doe3', date: 'September 23, 2024', description: 'This is a description inside of the announcement card3.' },
-      { user: 'John Doe4', date: 'September 23, 2024', description: 'This is a description inside of the announcement card4.' },
-    ]
+    //this needs to be changed to only loading the user's company announcements
+    this.apiService.getAllAnnouncements()
+      .then(data => {
+
+        if (Array.isArray(data)) {
+          data.forEach(item => {
+            this.announcements.push({
+              user: item.author.profile.firstName + " " + item.author.profile.lastName,
+              date: new Date(item.date).toLocaleDateString(),
+              description: item.message,
+            });
+          });
+        }
+
+      })
+      .catch(error => {
+        console.log(error)
+      });
   }
 
   addNewAnnouncement(message: string) {
-    //get current user and date from backend
+    //get current user and date from backend and post to save in backend
     this.announcements.unshift({ user: '', date: '', description: message });
   }
 }

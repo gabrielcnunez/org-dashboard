@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
-import { HttpClient } from '@angular/common/http';
+import { Router } from "@angular/router";
+import { ApiService } from "../../services/api.service";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ export class LoginComponent {
   email = "";
   password = "";
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private apiService: ApiService) {}
 
   onSubmit() {
     //TOD0 check if login is valid and input not empty
@@ -27,10 +27,6 @@ export class LoginComponent {
     // console.log("Password: " + this.password)
 
     //goes to homepage once verified it's a user
-    //this.router.navigate(["home"]);
-
-    let url = 'http://localhost:8080/announcements'
-    let data = this.http.get(url).toPromise();
-    console.log(data);
+    this.router.navigate(["home"]);
   }
 }
