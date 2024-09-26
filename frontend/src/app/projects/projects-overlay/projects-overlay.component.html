@@ -1,44 +1,43 @@
 <div class="overlay" *ngIf="isHidden">
-
-    <div class="overlay-content">
-  
-      <form (ngSubmit)="onSubmit()">
-  
-        <div class="form-group">
-          <label style="color: #DEB992;" for="projectname">Project Name:</label>
-          <input id="projectname" [(ngModel)]="project.name" name="projectname" required />
-        </div>
-  
-        <div class="form-group">
-          <label style="color: #DEB992;" for="description">Description:</label>
-          <input id="description" [(ngModel)]="project.description" name="description" required />
-        </div>
-
-  
-    <div *ngIf="edit">
-      <h2 style="color: #DEB992;">Active?</h2>
-
-      <div class="dropdown" *ngIf="edit">
-
-        <button class="dropbtn">Pick an option</button>
-  
-        <div class="dropdown-content">
-          <a>true</a>
-          <a>false</a>
-        </div>
-    </div>
+  <div class="overlay-content">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label style="color: #deb992" for="projectname">Project Name:</label>
+        <input
+          id="projectname"
+          [(ngModel)]="project.name"
+          name="projectname"
+          required
+        />
       </div>
 
-      
-        
+      <div class="form-group">
+        <label style="color: #deb992" for="description">Description:</label>
+        <input
+          id="description"
+          [(ngModel)]="project.description"
+          name="description"
+          required
+        />
+      </div>
+
+      <div *ngIf="edit">
+        <h2 style="color: #deb992">Active?</h2>
+
+        <div class="dropdown" *ngIf="edit">
+          <button type="button" class="dropbtn">{{ selectedStatus !== null ? (selectedStatus ? 'Yes' : 'No') : 'Pick an option' }}</button>
+
+          <div class="dropdown-content">
+            <a (click)="setActiveStatus(true)">Yes</a>
+            <a (click)="setActiveStatus(false)">No</a>
+          </div>
+        </div>
+      </div>
+
       <div class="button-container">
         <button type="button" (click)="close()">Close</button>
         <button type="submit">Submit</button>
       </div>
-
-      </form>
-  
+    </form>
   </div>
-  
 </div>
-

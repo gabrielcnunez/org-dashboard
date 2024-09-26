@@ -75,7 +75,6 @@ export class ApiService {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'});
     
-    console.log(body)
     const url = companyUrl + `${companyId}/teams/${teamId}/projects/${projectId}/edit`;
     return await this.http.patch(url, body, { headers } ).toPromise();
   }

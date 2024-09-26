@@ -61,7 +61,6 @@ export class ProjectsComponent {
 
   updateProject(project: Project) {
     if (!this.overlay.checkEmptyFields()) {
-      // console.log(this.overlay.project);
   
       const updatedProject = this.overlay.project;
       const projectId = updatedProject.id!;
