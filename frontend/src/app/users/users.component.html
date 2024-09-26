@@ -2,10 +2,10 @@
 
   <header>User Registry</header>
 
-  <button *ngIf="this.showUsers && this.loggedIn" class="add-user-button" (click)="clickAddButton()">Add User</button>
+  <button *ngIf="this.showUsers && this.admin" class="add-user-button" (click)="clickAddButton()">Add User</button>
   <app-user-overlay></app-user-overlay>
 
-  <table *ngIf="this.showUsers && this.loggedIn">
+  <table *ngIf="this.showUsers && this.admin">
     <thead>
       <tr>
         <th>Name</th>
