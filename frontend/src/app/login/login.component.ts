@@ -51,8 +51,12 @@ export class LoginComponent implements OnInit {
       "username": "temporaryceoofwaystar",
       "password": "idontgetpaidenoughforthis"
     }
+    let credentials4 = {  //admin
+      "username": "willsusername",
+      "password": "willspassword"
+    }
 
-    this.apiService.postUserLogin(credentials2)
+    this.apiService.postUserLogin(credentials4)
       .then(() => {
 
         this.userData = this.apiService.getUserData();
@@ -73,6 +77,7 @@ export class LoginComponent implements OnInit {
   }
 
   private saveUserToLocalStorage() {
+    console.log(this.userData)
     localStorage.setItem("admin", JSON.stringify(this.userData.admin));
     localStorage.setItem("companyId", JSON.stringify(this.userData.companies[0].id));
     localStorage.setItem("userId", JSON.stringify(this.userData.id));

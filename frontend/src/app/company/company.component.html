@@ -8,9 +8,9 @@
       <button class="dropbtn">Pick an option</button>
 
       <div class="dropdown-content">
-        <a>Fedex</a>
-        <a>Cook Systems</a>
-        <a>Google</a>
+        <a *ngFor="let item of companies" (click)="onClick(item.id)">
+          {{ item.name }}
+        </a>
       </div>
 
     </div>
