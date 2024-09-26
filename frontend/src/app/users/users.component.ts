@@ -14,20 +14,19 @@ export class UsersComponent implements OnInit {
   //users = [{ name: '', email: '', active: false, admin: false, status: '' }];
   users: BasicUser[] = [];
 
-  loggedIn = true;
+  admin = false;
   showUsers = false;
-  companyId = 7;
+  companyId = -1;
 
-  adminCredentials: Credentials  = {
-    "username": "temporaryceoofwaystar",
-    "password": "idontgetpaidenoughforthis"
-  }
+  adminCredentials: Credentials  = {"username": "","password": ""}
 
   @ViewChild(UserOverlayComponent) overlay!: UserOverlayComponent;
 
   ngOnInit() {
-    //this.loadAllUsers()
-    if (this.loggedIn === true) {
+    this.admin = this.getAdmin();
+    this.adminCredentials = this.getCredentials();
+    this.companyId = this.getCompanyId();
+    if (this.admin === true && this.checkCredentials() && this.checkCompanyId()) {
       this.getAllUsers();
     }
   }
@@ -47,27 +46,39 @@ export class UsersComponent implements OnInit {
     .then(() => this.showUsers = true)
     .then(() => console.log(this.users))
     .catch(error => {
+      this.showUsers = false;
       console.error(error);
     });
   }
 
-  // loadAllUsers() {
-  //   this.users = [
-  //     { name: 'Chris Purnell', email: 'yocrizzle@gmail.com', active: true, admin: true, status: 'JOINED' },
-  //     { name: 'Kenny Worth', email: 'kmoney@gmail.com', active: true, admin: true, status: 'JOINED' },
-  //     { name: 'Will Marttala', email: 'wamizzle@gmail.com', active: false, admin: false, status: 'PENDING' },
-  //     { name: 'Helena Makendengue', email: 'hmasizzle@gmail.com', active: false, admin: false, status: 'PENDING' }
-  //   ];
-  // }
+  checkCompanyId() {
+    return this.companyId > -1;
+  }
 
-  // TODO
+  checkCredentials() {
+    return !Object.values(this.adminCredentials).some(value => value === '' || value === null);
+  }
+
+  getCredentials() {
+    console.log(localStorage.getItem("credentials"))
+    return JSON.parse(localStorage.getItem("credentials") ?? "'username':'','password':''");
+  }
+
+  getAdmin() {
+    return JSON.parse(localStorage.getItem("admin") ?? "false");
+  }
+
+  getCompanyId() {
+    return JSON.parse(localStorage.getItem("companyId") ?? "-1");
+  }
+
   async addNewUser(newUser: any) {
     newUser.companyId = this.companyId;
+    // These credentials are the currently logged-in admin's credentials
+    // The user's credentials are at newUser.user.credentials
     newUser.credentials = this.adminCredentials;
     await this.apiService.createUser(newUser);
     this.getAllUsers();
-    //let name = newUser.firstname + ' ' + newUser.lastname;
-    //this.users.unshift({ name: name, email: newUser.email, active: true, admin: newUser.admin, status: 'JOINED' });
   }
 }
 

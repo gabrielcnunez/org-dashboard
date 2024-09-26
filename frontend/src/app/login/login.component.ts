@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
       .then(() => {
 
         this.userData = this.apiService.getUserData();
+        this.userData.credentials=credentials4
         this.saveUserToLocalStorage();
 
         //navigate to company/home if admin/worker
@@ -78,7 +79,9 @@ export class LoginComponent implements OnInit {
 
   private saveUserToLocalStorage() {
     console.log(this.userData)
+    console.log(this.userData.credentials);
     localStorage.setItem("admin", JSON.stringify(this.userData.admin));
+    localStorage.setItem("credentials", JSON.stringify(this.userData.credentials));
     localStorage.setItem("companyId", JSON.stringify(this.userData.companies[0].id));
     localStorage.setItem("userId", JSON.stringify(this.userData.id));
     localStorage.setItem("firstName", JSON.stringify(this.userData.profile.firstName));
