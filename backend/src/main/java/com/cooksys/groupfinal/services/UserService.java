@@ -9,12 +9,12 @@ public interface UserService {
 
 	FullUserDto login(CredentialsDto credentialsDto);
 
-	void loginAdmin(CredentialsDto credentialsDto);
+	FullUserDto loginAdmin(CredentialsDto credentialsDto);
 
 	User findUser(Long id);
 
 	//BasicUserDto createUser(UserRequestDto userRequestDto);
 	BasicUserDto createUser(CreateUserDto createUserDto);
 
-	List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto);
+	List<BasicUserDto> getAllUsers();
 }
