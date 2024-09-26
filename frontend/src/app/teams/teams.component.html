@@ -4,7 +4,7 @@
     <h1 style="padding-bottom: 1em; letter-spacing: 1px">Teams</h1>
     <div style ="display: flex; flex-direction: row; width: 1200px; flex-wrap: wrap;">
       <div *ngFor="let team of teams; index as i" >
-        <div class="edit-button" (click) = "editTeam(i)">
+        <div class="edit-button" (click) = "editTeam(team)">
           <div class ="card-content-name">
             <div style="color:white; background-color: #0B2D45; margin-right: 190px;">{{team.name}}</div>
             
