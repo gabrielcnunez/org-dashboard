@@ -45,6 +45,14 @@ export class ApiService {
     return await this.http.get(companyUrl + `${companyId}/teams`).toPromise();
   }
 
+  async getCompanyUsers(companyId: number) {
+    return await this.http.get(companyUrl + `${companyId}/users`).toPromise();
+  }
+
+  async getCompanyTeamProject(companyId: number, teamId: number) {
+    return await this.http.get(companyUrl + `${companyId}/teams/${teamId}/projects`).toPromise();
+  }
+
   async addNewTeam() {
 
   }

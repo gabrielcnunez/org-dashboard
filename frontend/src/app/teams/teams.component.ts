@@ -31,6 +31,7 @@ export class TeamsComponent {
         if (Array.isArray(data)) {
           data.forEach(item => {
             this.teams.push({
+              id: item.id,
               name: item.name,
               description: item.description,
               members: item.teammates,
@@ -47,14 +48,16 @@ export class TeamsComponent {
 
   onSubmit() {
     
-    this.overlay.open();
-    if (!this.overlay.checkEmptyFields()) {
-      console.log(this.overlay.team)
-      this.teams.push(this.overlay.team)
-    }
+    this.overlay.open(this.teams);
+     
+    
   }
 
-  editTeam(i: number) {
-    this.router.navigate(["projects"]);
+  editTeam(team: Team) {
+    if (team.id !== undefined) {
+      let id: number = team.id
+      localStorage.setItem("currTeam", String(id))
+      this.router.navigate(["projects"]);
+    }
   }
 }

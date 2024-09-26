@@ -23,17 +23,15 @@
         <button class="dropbtn">Pick an option</button>
   
         <div class="dropdown-content">
-          <a>Fedex</a>
-          <a>Cook Systems</a>
-          <a>Google</a>
+          <div *ngFor="let user of availableUsers"><a (click)="addMember(user.profile.firstName)">{{user.profile.firstName + " " + user.profile.lastName[0] + "."}}</a></div>
         </div>
   
       </div>
 
       <div style="position: relative;">
-        <div style=" background-color: #0d1118; display: flex; flex-direction: row; position:relative; left: 11.5em;" *ngFor="let member of team.members" >
-                <div class = "card-content-member" >{{member}}</div>
-                <div (click)="removeMember(member)" id="mdiv">
+        <div style=" background-color: #0d1118; display: flex; flex-direction: row; position:relative; left: 11.5em; width: 200px;" *ngFor="let member of team.members" >
+                <div class = "card-content-member" >{{member.profile.firstName + " " + member.profile.lastName[0] + "."}}</div>
+                <div (click)="removeMember(member.profile.firstName)" id="mdiv">
                   <div class="mdiv">
                     <div class="md"></div>
                   </div>
@@ -44,7 +42,7 @@
         
       <div class="button-container">
         <button type="button" (click)="close()">Close</button>
-        <button type="submit">Create</button>
+        <button  type="submit">Create</button>
       </div>
 
       </form>
