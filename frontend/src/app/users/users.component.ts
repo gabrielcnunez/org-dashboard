@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { UserOverlayComponent } from './user-overlay/user-overlay.component';
-import {ApiService, BasicUser, Profile, Credentials} from "src/services/api.service";
+import {ApiService, BasicUser, Profile, Credentials, CreateUser, UserRequest} from "src/services/api.service";
 
 @Component({
   selector: 'app-users',
@@ -16,8 +16,9 @@ export class UsersComponent implements OnInit {
 
   loggedIn = true;
   showUsers = false;
+  companyId = 7;
 
-  credentials: Credentials  = {
+  adminCredentials: Credentials  = {
     "username": "temporaryceoofwaystar",
     "password": "idontgetpaidenoughforthis"
   }
@@ -39,7 +40,7 @@ export class UsersComponent implements OnInit {
   }
 
   async getAllUsers() {
-    this.apiService.getUsers(this.credentials)
+    this.apiService.getUsers(this.adminCredentials)
     .then(data => {
       this.users = data;
     })
@@ -60,7 +61,11 @@ export class UsersComponent implements OnInit {
   // }
 
   // TODO
-  addNewUser(newUser: any) {
+  async addNewUser(newUser: any) {
+    newUser.companyId = this.companyId;
+    newUser.credentials = this.adminCredentials;
+    await this.apiService.createUser(newUser);
+    this.getAllUsers();
     //let name = newUser.firstname + ' ' + newUser.lastname;
     //this.users.unshift({ name: name, email: newUser.email, active: true, admin: newUser.admin, status: 'JOINED' });
   }
