@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public BasicUserDto createUser(CreateUserDto createUserDto) {
     //public BasicUserDto createUser(UserRequestDto userRequestDto) {
         CredentialsDto credentialsDto = createUserDto.getCredentials();

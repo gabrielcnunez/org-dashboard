@@ -27,10 +27,24 @@ export interface BasicUser {
   status: string;
 };
 
+export interface UserRequest {
+  credentials: Credentials;
+  profile: Profile;
+  admin: boolean;
+}
+
+export interface CreateUser {
+  credentials: Credentials;
+  user: UserRequest;
+  companyId: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+
+  private userData: BasicUser | undefined;
 
   constructor(private http: HttpClient) { }
 
@@ -80,6 +94,36 @@ export class ApiService {
     let response = await this.http.get<BasicUser[]>(usersUrl, { headers: headers }).toPromise();
 
     return response ?? [];
+  }
+
+  async postUserLogin(credentials: Credentials) {
+
+    const body = {
+      username: credentials.username,
+      password: credentials.password
+    };
+
+    let response = await this.http.post<BasicUser>(usersUrl + `login`, body).toPromise();
+    this.userData = response;
+    return response
+  }
+
+
+  async createUser(newUser: CreateUser) {
+
+    const body = JSON.stringify(newUser);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json' // Set the proper header
+  });
+
+    let response = await this.http.post<BasicUser>(usersUrl + `create`, body, { headers: headers }).toPromise();
+    this.userData = response;
+    return response
+  }
+
+  getUserData() {
+    return this.userData;
   }
 
 }

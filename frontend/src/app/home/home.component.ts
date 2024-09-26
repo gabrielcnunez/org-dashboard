@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(AnnouncementOverlayComponent) overlay!: AnnouncementOverlayComponent;
   // announcements = [{ user: '', date: '', description: '' }]
   announcements: any[] = []
+  userData: any;
 
 
   constructor(private apiService: ApiService) {}
@@ -26,7 +27,10 @@ export class HomeComponent implements OnInit {
 
   loadAllAnnouncements() {
     //this needs to be changed to only loading the user's company announcements
-    this.apiService.getAllAnnouncements()
+    this.userData = this.apiService.getUserData();
+    let userCompanyId = this.userData.companies[0].id;
+
+    this.apiService.getCompanyAnnouncements(userCompanyId)
       .then(data => {
 
         if (Array.isArray(data)) {
