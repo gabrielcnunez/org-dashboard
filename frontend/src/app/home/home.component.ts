@@ -27,8 +27,9 @@ export class HomeComponent implements OnInit {
 
   loadAllAnnouncements() {
     //this needs to be changed to only loading the user's company announcements
-    this.userData = this.apiService.getUserData();
-    let userCompanyId = this.userData.companies[0].id;
+    // this.userData = this.apiService.getUserData();
+    // let userCompanyId = this.userData.companies[0].id;
+    let userCompanyId = JSON.parse(<string>localStorage.getItem('companyId'));
 
     this.apiService.getCompanyAnnouncements(userCompanyId)
       .then(data => {

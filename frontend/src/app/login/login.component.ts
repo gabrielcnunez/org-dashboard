@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 
@@ -7,13 +7,17 @@ import { ApiService } from "../../services/api.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   username = "";
   password = "";
   userData: any;
 
   constructor(private router: Router, private apiService: ApiService) {}
+
+  ngOnInit() {
+    localStorage.clear();
+  }
 
   onSubmit() {
     //TOD0 check if login is valid and input not empty
@@ -52,6 +56,7 @@ export class LoginComponent {
       .then(() => {
 
         this.userData = this.apiService.getUserData();
+        this.saveUserToLocalStorage();
 
         //navigate to company/home if admin/worker
         if (this.userData.admin) {
@@ -65,5 +70,12 @@ export class LoginComponent {
         console.error(error);
       });
 
+  }
+
+  private saveUserToLocalStorage() {
+    localStorage.setItem("admin", JSON.stringify(this.userData.admin));
+    localStorage.setItem("companyId", JSON.stringify(this.userData.companies[0].id));
+    localStorage.setItem("userId", JSON.stringify(this.userData.id));
+    localStorage.setItem("firstName", JSON.stringify(this.userData.profile.firstName));
   }
 }
