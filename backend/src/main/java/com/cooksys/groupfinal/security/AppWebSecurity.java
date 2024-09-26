@@ -29,7 +29,9 @@ public class AppWebSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSec) throws Exception {
-        httpSec.httpBasic()
+        httpSec
+            .csrf().disable()
+            .httpBasic()
             .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/users").authenticated() // Require authentication to view all users
