@@ -1,6 +1,7 @@
 import { Component, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { TeamsOverlayComponent } from './teams-overlay/teams-overlay.component';
+import { ApiService } from 'src/services/api.service';
 import Team from '../models/team';
 
 
@@ -13,35 +14,36 @@ import Team from '../models/team';
   
 })
 export class TeamsComponent {
-  teams: Team[] = [{
-    name: 'team1',
-    description: 'this is a team',
-    company: 1,
-    members: ["tim", "kenny", "burt"]
-    },
-    {
-    name: 'team2',
-    description: 'this is a team also',
-    company: 2,
-    members: []
-    },
-  {
-    name: 'team1',
-    description: 'this is a team',
-    company: 1,
-    members: []
-    },
-    {
-    name: 'team2',
-    description: 'this is a team also',
-    company: 2,
-    members: []
-    }
-  ]
-  @ViewChild(TeamsOverlayComponent) overlay!: TeamsOverlayComponent;
-  constructor(private router: Router) {}
+  teams: Team[] = []
 
-  
+  @ViewChild(TeamsOverlayComponent) overlay!: TeamsOverlayComponent;
+
+  constructor(private router: Router, private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.loadAllTeams()
+  }
+
+  loadAllTeams() {
+    // number "6" will be replaced with current company 
+    this.apiService.getCompanyTeams(6)
+      .then(data => {
+        if (Array.isArray(data)) {
+          data.forEach(item => {
+            this.teams.push({
+              name: item.name,
+              description: item.description,
+              members: item.teammates,
+              projectCount: item.projectCount
+            });
+          });
+        }
+
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  }
 
   onSubmit() {
     

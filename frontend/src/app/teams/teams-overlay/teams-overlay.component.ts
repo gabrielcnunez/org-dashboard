@@ -8,8 +8,9 @@ import Team from 'src/app/models/team';
 })
 export class TeamsOverlayComponent {
   isHidden = false;
-  team: Team = {name: '', description: '', company: 0, members: ['ben']}
+  team: Team = {name: '', description: '', members: [], projectCount: 0}
 
+  
 
   open() {
     this.isHidden = true;
