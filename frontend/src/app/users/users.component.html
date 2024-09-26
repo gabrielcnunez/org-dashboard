@@ -5,7 +5,7 @@
   <button class="add-user-button" (click)="clickAddButton()">Add User</button>
   <app-user-overlay></app-user-overlay>
 
-  <table>
+  <table *ngIf="this.showUsers">
     <thead>
       <tr>
         <th>Name</th>
@@ -19,8 +19,8 @@
     <tbody>
       <tr *ngFor="let user of users">
 
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
+        <td>{{ user.profile.firstName }} {{ user.profile.lastName }}</td>
+        <td>{{ user.profile.email }}</td>
         <td [ngClass]="user.active ? 'green-text' : 'red-text'">{{ user.active ? 'YES' : 'NO' }}</td>
         <td [ngClass]="user.admin ? 'green-text' : 'red-text'">{{ user.admin ? 'YES' : 'NO' }}</td>
         <td>{{ user.status }}</td>
