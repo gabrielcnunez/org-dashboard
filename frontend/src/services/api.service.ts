@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
+import Project from '../app/models/project';
 
 const usersUrl = 'http://localhost:8080/users/'
 const teamUrl = 'http://localhost:8080/announcements/'
@@ -51,6 +52,18 @@ export class ApiService {
 
   async getCompanyTeamProject(companyId: number, teamId: number) {
     return await this.http.get(companyUrl + `${companyId}/teams/${teamId}/projects`).toPromise();
+  }
+
+  async updateProject(companyId: number, teamId: number, projectId: number, updatedProject: Project): Promise<any> {
+    const body = JSON.stringify(updatedProject)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'});
+    
+    console.log(body)
+    const url = companyUrl + `${companyId}/teams/${teamId}/projects/${projectId}/edit`;
+    return await this.http.patch(url, body, { headers } ).toPromise();
   }
 
   async addNewTeam() {
