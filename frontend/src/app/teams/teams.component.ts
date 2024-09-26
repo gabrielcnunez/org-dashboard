@@ -48,7 +48,10 @@ export class TeamsComponent {
   onSubmit() {
     
     this.overlay.open();
-    
+    if (!this.overlay.checkEmptyFields()) {
+      console.log(this.overlay.team)
+      this.teams.push(this.overlay.team)
+    }
   }
 
   editTeam(i: number) {

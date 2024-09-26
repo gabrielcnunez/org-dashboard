@@ -22,13 +22,17 @@ export class TeamsOverlayComponent {
   }
 
   onSubmit() {
-    
+    if (this.checkEmptyFields()) {
+      console.log("empty fields")
+      return;
+    }
+    this.close()
   }
 
   checkEmptyFields() {
-    
+    return Object.values(this.team).some(value => value === '' || value === null);
   }
-
+  
   removeMember(member: string) {
     const index = this.team.members.indexOf(member, 0);
     if (index > -1) {
