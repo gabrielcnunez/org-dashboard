@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-const usersUrl = 'http://localhost:8080/users/'
-const teamUrl = 'http://localhost:8080/announcements/'
-const companyUrl = 'http://localhost:8080/company/'
-const announcementsUrl = 'http://localhost:8080/announcements/'
+const usersUrl = 'http://localhost:8080/users'
+const teamUrl = 'http://localhost:8080/announcements'
+const companyUrl = 'http://localhost:8080/company'
+const announcementsUrl = 'http://localhost:8080/announcements'
 
 export interface Credentials {
   username: string;
@@ -52,19 +52,19 @@ export class ApiService {
   }
 
   async getCompanyAnnouncements(companyId: number) {
-    return await this.http.get(announcementsUrl + `company/${companyId}`).toPromise();
+    return await this.http.get(announcementsUrl + `/company/${companyId}`).toPromise();
   }
 
   async getCompanyTeams(companyId: number) {
-    return await this.http.get(companyUrl + `${companyId}/teams`).toPromise();
+    return await this.http.get(companyUrl + `/${companyId}/teams`).toPromise();
   }
 
   async getCompanyUsers(companyId: number) {
-    return await this.http.get(companyUrl + `${companyId}/users`).toPromise();
+    return await this.http.get(companyUrl + `/${companyId}/users`).toPromise();
   }
 
   async getCompanyTeamProject(companyId: number, teamId: number) {
-    return await this.http.get(companyUrl + `${companyId}/teams/${teamId}/projects`).toPromise();
+    return await this.http.get(companyUrl + `/${companyId}/teams/${teamId}/projects`).toPromise();
   }
 
   async addNewTeam() {
@@ -90,7 +90,7 @@ export class ApiService {
       password: credentials.password
     };
 
-    let response = await this.http.post<BasicUser>(usersUrl + `login`, body).toPromise();
+    let response = await this.http.post<BasicUser>(usersUrl + `/login`, body).toPromise();
     this.userData = response;
     return response
   }
@@ -104,7 +104,7 @@ export class ApiService {
       'Content-Type': 'application/json' // Set the proper header
   });
 
-    let response = await this.http.post<BasicUser>(usersUrl + `create`, body, { headers: headers }).toPromise();
+    let response = await this.http.post<BasicUser>(usersUrl + `/create`, body, { headers: headers }).toPromise();
     this.userData = response;
     return response
   }
