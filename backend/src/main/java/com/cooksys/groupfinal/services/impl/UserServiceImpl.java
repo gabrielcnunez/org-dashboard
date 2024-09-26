@@ -22,6 +22,7 @@ import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -67,13 +68,15 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public void loginAdmin(CredentialsDto credentialsDto) {
+    @Transactional
+    public FullUserDto loginAdmin(CredentialsDto credentialsDto) {
         FullUserDto requesterDto = login(credentialsDto);
-        User requester = fullUserMapper.fullUserDtoToEntity(requesterDto);
 
-        if (!requester.isAdmin()) {
+        if (!requesterDto.isAdmin()) {
             throw new NotAuthorizedException("This user is not an administrator.");
         }
+
+        return requesterDto;
     }
 
     private void checkUserExists(String username) {
@@ -125,9 +128,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BasicUserDto> getAllUsers(CredentialsDto credentialsDto) {
-        loginAdmin(credentialsDto);
-
+    public List<BasicUserDto> getAllUsers() {
         //Set<User> userSet = new HashSet<>(userRepository.findAll());
         List<User> userList = userRepository.findAllByOrderByActiveDescProfileLastNameAscProfileFirstNameAsc();
         return basicUserMapper.entitiesToBasicUserDtos(userList);
