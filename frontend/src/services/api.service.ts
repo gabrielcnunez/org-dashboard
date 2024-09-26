@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient,HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 const usersUrl = 'http://localhost:8080/users/'
 const teamUrl = 'http://localhost:8080/announcements/'
@@ -30,6 +30,8 @@ export interface BasicUser {
   providedIn: 'root'
 })
 export class ApiService {
+
+  private userData: BasicUser | undefined;
 
   constructor(private http: HttpClient) { }
 
@@ -67,6 +69,22 @@ export class ApiService {
     let response = await this.http.get<BasicUser[]>(usersUrl, { headers: headers }).toPromise();
 
     return response ?? [];
+  }
+
+  async postUserLogin(credentials: Credentials) {
+
+    const body = {
+      username: credentials.username,
+      password: credentials.password
+    };
+
+    let response = await this.http.post<BasicUser>(usersUrl + `login`, body).toPromise();
+    this.userData = response;
+    return response
+  }
+
+  getUserData() {
+    return this.userData;
   }
 
 }
