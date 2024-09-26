@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping("")
 	@CrossOrigin(origins="*")
-    public List<BasicUserDto> getAllUsers(@RequestBody CredentialsDto credentialsDto) { return userService.getAllUsers(credentialsDto); }
+    public List<BasicUserDto> getAllUsers() { return userService.getAllUsers(); }
 
 
 }
