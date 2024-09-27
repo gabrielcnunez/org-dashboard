@@ -1,0 +1,28 @@
+.container {
+    width: 40em;
+    height: 40em;
+    margin: 5em auto;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+hr {
+    display: block;
+    height: 1px;
+   
+    border: 0;
+    border-top: 1px solid #DEB992;
+    margin: 1em 0;
+    padding: 0;
+}
+
+button {
+    position:relative;
+    left: 45em;
+    background-color: #DEB992;
+    color: #0d1118;
+    border-radius: 100px;
+    
+    cursor: pointer;
+  }

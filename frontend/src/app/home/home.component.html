@@ -1,0 +1,18 @@
+<body>
+
+  <header>Announcements</header>
+  <div *ngIf="checkCompanyId()"></div>
+  <button *ngIf="admin" class="create-announcement-button" (click)="clickNewButton()">New</button>
+  <app-announcement-overlay></app-announcement-overlay>
+
+  <div *ngFor="let announcement of announcements">
+
+    <app-announcement-card
+      [user]="announcement.user"
+      [date]="announcement.date"
+      [description]="announcement.description">
+    </app-announcement-card>
+
+  </div>
+
+</body>

@@ -1,0 +1,13 @@
+<nav [hidden]="isHidden">
+  <header>
+
+    <span style="color: #ffa700">{{ name }}</span>
+
+    <button routerLink="home" class="nav-button" (click)="clicked()">Home</button>
+    <button *ngIf="admin" routerLink="company" class="nav-button" (click)="clicked()">Company</button>
+    <button routerLink="teams" class="nav-button" (click)="clicked()">Teams</button>
+    <button *ngIf="admin" routerLink="users" class="nav-button" (click)="clicked()">Users</button>
+    <button routerLink="" class="nav-button" (click)="clicked()">Logout</button>
+
+  </header>
+</nav>

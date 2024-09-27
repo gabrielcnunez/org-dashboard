@@ -1,0 +1,22 @@
+<body>
+  <div class="container">
+
+    <h1 style="font-size: 3em; letter-spacing: 2px">COOK SYSTEMS</h1>
+    <h1 style="padding-bottom: 1em; letter-spacing: 1px">A FINAL APP</h1>
+
+    <div class="card">
+      <div class="card-content">
+
+        <input type="text" placeholder="Enter username" class="input-field" [(ngModel)]="username" />
+        <input type="password" placeholder="Enter password" class="input-field" [(ngModel)]="password" />
+        <button class="login-button" (click)="onSubmit()">LOGIN</button>
+        
+      </div>
+    </div>
+    
+    <div *ngIf="loginError" class="error-message">
+      Invalid username or password. Please try again.
+    </div>
+
+  </div>
+</body>
