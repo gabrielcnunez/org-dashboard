@@ -12,17 +12,24 @@ export class CompanyComponent {
   companies: Company[] = [
   ];
 
+  userCompanies: number[] = [];
+
   constructor(private router: Router, private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getAllCompanies()
-      .then(data => {this.companies = data})
-      .catch((error) => console.log(error));
+    this.userCompanies = this.getUserCompanies();
+    this.getAllCompanies();
   }
 
 
+  getUserCompanies() {
+    return JSON.parse(localStorage.getItem("companies") || "[]");
+  }
+
   async getAllCompanies() {
-    this.apiService.getAllCompanies()
+    console.log(this.userCompanies);
+    await this.apiService.getAllCompanies()
+    .then(data => data.filter(company => this.userCompanies.includes(company.id)))
     .then(data => this.companies = data)
     .catch((error) => console.log(error));
   }
