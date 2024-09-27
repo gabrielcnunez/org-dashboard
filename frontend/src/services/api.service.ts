@@ -39,6 +39,12 @@ export interface CreateUser {
   companyId: number;
 }
 
+export interface Announcement {
+  title: string;
+  message: string;
+  author: BasicUser;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -74,7 +80,7 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'});
-    
+
     const url = companyUrl + `${companyId}/teams/${teamId}/projects/${projectId}/edit`;
     return await this.http.patch(url, body, { headers } ).toPromise();
   }
@@ -120,6 +126,19 @@ export class ApiService {
     this.userData = response;
     return response
   }
+
+  async createAnnouncement(newAnnouncement: Announcement, companyId: number) {
+
+    const body = JSON.stringify(newAnnouncement);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+  });
+
+    let response = await this.http.post<Announcement>(announcementsUrl + `/company/${companyId}`, body, { headers: headers }).toPromise();
+    return response
+  }
+
 
   getUserData() {
     return this.userData;
