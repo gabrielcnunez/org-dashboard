@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import Project from '../app/models/project';
+import Team from 'src/app/models/team';
 
 const usersUrl = 'http://localhost:8080/users'
-const teamUrl = 'http://localhost:8080/announcements'
+const teamUrl = 'http://localhost:8080/team'
 const companyUrl = 'http://localhost:8080/company'
 const announcementsUrl = 'http://localhost:8080/announcements'
 
@@ -39,6 +40,14 @@ export interface CreateUser {
   companyId: number;
 }
 
+export interface CreateTeam {
+  credentials: Credentials,
+  name: string,
+  description: string,
+  teammateIds: number[],
+  companyId: number
+}
+
 export interface Announcement {
   title: string;
   message: string;
@@ -51,6 +60,7 @@ export interface Announcement {
 export class ApiService {
 
   private userData: BasicUser | undefined;
+  private teamData: Team | undefined;
 
   constructor(private http: HttpClient) { }
 
@@ -85,8 +95,17 @@ export class ApiService {
     return await this.http.patch(url, body, { headers } ).toPromise();
   }
 
-  async addNewTeam() {
+  async addNewTeam(newTeam: CreateTeam) {
 
+    const body = JSON.stringify(newTeam);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json' // Set the proper header
+  });
+
+    let response = await this.http.post<Team>(teamUrl + `/create`, body, { headers: headers }).toPromise();
+    this.teamData = response;
+    return response
   }
 
   async getUsers(credentials: Credentials): Promise<BasicUser[]> {
