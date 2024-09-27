@@ -26,13 +26,15 @@ export class ProjectsComponent {
         if (Array.isArray(data)) {
           data.forEach(item => {
             this.projects.push({
+              id: item.id,
               name: item.name,
               description: item.description,
-              active: item.active
+              active: item.active,
+              teamId: item.team.id
             });
           });
         }
-
+        console.log(this.projects)
       })
       .catch(error => {
         console.log(error)
@@ -61,11 +63,13 @@ export class ProjectsComponent {
 
   updateProject(project: Project) {
     if (!this.overlay.checkEmptyFields()) {
-  
+      const companyId = this.getCompanyId()
+      const teamId = project.teamId
+      const projectId = project.id
       const updatedProject = this.overlay.project;
-      const projectId = updatedProject.id!;
-  
-      this.apiService.updateProject(6, 11, 30, updatedProject)
+
+      if (teamId !== undefined && projectId !== undefined) {
+        this.apiService.updateProject(companyId, teamId, projectId, updatedProject)
         .then(() => {
           let i: number = this.projects.indexOf(project);
           this.projects[i] = updatedProject;
@@ -74,6 +78,7 @@ export class ProjectsComponent {
         .catch(error => {
           console.log('Error updating project:', error);
         });
+      }
     }
   }
   getCompanyId() {

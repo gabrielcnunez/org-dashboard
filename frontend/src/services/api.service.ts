@@ -101,10 +101,9 @@ export class ApiService {
     const body = JSON.stringify(updatedProject)
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'});
+    });
 
-    const url = companyUrl + `${companyId}/teams/${teamId}/projects/${projectId}/edit`;
+    const url = companyUrl + `/${companyId}/teams/${teamId}/projects/${projectId}/edit`;
     return await this.http.patch(url, body, { headers } ).toPromise();
   }
 
