@@ -39,8 +39,8 @@ export class UsersComponent implements OnInit {
   }
 
   async getAllUsers() {
-    this.apiService.getCompanyUsers(this.companyId)
-    // this.apiService.getUsers(this.adminCredentials)
+    //this.apiService.getCompanyUsers(this.companyId)
+     this.apiService.getUsers(this.adminCredentials)
     .then(data => {
 
       if (Array.isArray(data)) {
@@ -87,10 +87,12 @@ export class UsersComponent implements OnInit {
 
   async addNewUser(newUser: any) {
     newUser.companyId = this.companyId;
+    newUser.active = true;
     // These credentials are the currently logged-in admin's credentials
     // The user's credentials are at newUser.user.credentials
     newUser.credentials = this.adminCredentials;
     await this.apiService.createUser(newUser);
+    this.users = [];
     this.getAllUsers();
   }
 }
