@@ -1,7 +1,9 @@
 package com.cooksys.groupfinal.controllers;
 
+import java.util.List;
 import java.util.Set;
 
+import com.cooksys.groupfinal.dtos.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectRequestDto;
-import com.cooksys.groupfinal.dtos.ProjectResponseDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +25,13 @@ import lombok.RequiredArgsConstructor;
 public class CompanyController {
 	
 	private final CompanyService companyService;
-	
+
+	@GetMapping("/all")
+	@CrossOrigin(origins="*")
+	public List<CompanyResponseDto> getAllCompanies() {
+		return companyService.getAllCompanies();
+	}
+
 	@GetMapping("/{id}/users")
 	@CrossOrigin(origins="*")
     public Set<FullUserDto> getAllUsers(@PathVariable Long id) {
