@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import { Router } from "@angular/router";
-import { ApiService } from "../../services/api.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
-  username = "";
-  password = "";
+  username = '';
+  password = '';
   userData: any;
+  loginError: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService) {}
 
@@ -20,70 +20,55 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    //TOD0 check if login is valid and input not empty
-    //TOD0 also to navigate to company/home if admin/worker
+    const credentials = {
+      username: this.username,
+      password: this.password,
+    };
 
-    // Prevent submission if fields are empty
-    // if (!this.username || !this.password) {
-    //   return;
-    // }
-    // console.log("Email: " + this.username)
-    // console.log("Password: " + this.password)
+    this.apiService
+      .postUserLogin(credentials)
+      .then((response) => {
+        if (response) {
+          this.loginError = false;
+          this.userData = response;
+          this.saveUserToLocalStorage();
 
-    this.doLogin();
-
-    //goes to homepage once verified it's a user
-    // this.router.navigate(["home"]);
-  }
-
-  doLogin() {
-    //real way
-    let credentials = {
-      "username": this.username,
-      "password": this.password,
-    }
-    //testing purposes
-    let credentials2 = {  //not admin
-      "username": "pinky",
-      "password": "futureceoofwaystar",
-    }
-    let credentials3 = {  //admin
-      "username": "temporaryceoofwaystar",
-      "password": "idontgetpaidenoughforthis"
-    }
-    let credentials4 = {  //admin
-      "username": "willsusername",
-      "password": "willspassword"
-    }
-
-    this.apiService.postUserLogin(credentials4)
-      .then(() => {
-
-        this.userData = this.apiService.getUserData();
-        this.userData.credentials=credentials4
-        this.saveUserToLocalStorage();
-
-        //navigate to company/home if admin/worker
-        if (this.userData.admin) {
-          this.router.navigate(["company"]);
+          if (this.userData.admin) {
+            this.router.navigate(['company']);
+          } else {
+            this.router.navigate(['home']);
+          }
         } else {
-          this.router.navigate(["home"]);
+          this.loginError = true;
         }
-
       })
-      .catch(error => {
-        console.error(error);
+      .catch((error) => {
+        console.error('Error during login:', error);
+        this.loginError = true;
       });
-
   }
 
   private saveUserToLocalStorage() {
-    console.log(this.userData)
-    console.log(this.userData.credentials);
-    localStorage.setItem("admin", JSON.stringify(this.userData.admin));
-    localStorage.setItem("credentials", JSON.stringify(this.userData.credentials));
-    localStorage.setItem("companyId", JSON.stringify(this.userData.companies[0].id));
-    localStorage.setItem("userId", JSON.stringify(this.userData.id));
-    localStorage.setItem("firstName", JSON.stringify(this.userData.profile.firstName));
+    localStorage.setItem('admin', JSON.stringify(this.userData.admin));
+  
+    const credentials = {
+      username: this.username,
+      password: this.password
+    };
+    localStorage.setItem('credentials', JSON.stringify(credentials));
+
+    localStorage.setItem('companyId', JSON.stringify(this.userData.companies[0].id));
+    localStorage.setItem('userId', JSON.stringify(this.userData.id));
+    localStorage.setItem('firstName', JSON.stringify(this.userData.profile.firstName));
+    localStorage.setItem('lastName', JSON.stringify(this.userData.profile.lastName));
+  }
+
+  private logStoredValues() {
+    console.log('Stored admin:', localStorage.getItem('admin'));
+    console.log('Stored credentials:', localStorage.getItem('credentials'));
+    console.log('Stored companyId:', localStorage.getItem('companyId'));
+    console.log('Stored userId:', localStorage.getItem('userId'));
+    console.log('Stored firstName:', localStorage.getItem('firstName'));
+    console.log('Stored lastName:', localStorage.getItem('lastName'));
   }
 }
