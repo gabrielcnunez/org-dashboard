@@ -20,8 +20,7 @@ export class ProjectsComponent {
   }
 
   loadAllProjects() {
-    // number "6" will be replaced with current company 
-    this.apiService.getCompanyTeamProject(6, 11)
+    this.apiService.getCompanyTeamProject(this.getCompanyId(), Number(localStorage.getItem("currTeam")))
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach(item => {
@@ -75,6 +74,9 @@ export class ProjectsComponent {
           console.log('Error updating project:', error);
         });
     }
+  }
+  getCompanyId() {
+    return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
 
 }

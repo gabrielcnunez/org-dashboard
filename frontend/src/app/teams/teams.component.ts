@@ -24,9 +24,10 @@ export class TeamsComponent {
     this.loadAllTeams()
   }
 
+
+
   loadAllTeams() {
-    // number "6" will be replaced with current company 
-    this.apiService.getCompanyTeams(6)
+    this.apiService.getCompanyTeams(this.getCompanyId())
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach(item => {
@@ -44,6 +45,10 @@ export class TeamsComponent {
       .catch(error => {
         console.log(error)
       });
+  }
+
+  getCompanyId() {
+    return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
 
   onSubmit() {

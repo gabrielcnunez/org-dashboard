@@ -23,7 +23,7 @@ export class TeamsOverlayComponent {
   loadAllUsers() {
     // number "6" will be replaced with current company 
     this.availableUsers.pop()
-    this.apiService.getCompanyUsers(6)
+    this.apiService.getCompanyUsers(this.getCompanyId())
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach(item => {
@@ -86,5 +86,9 @@ export class TeamsOverlayComponent {
     if (index > -1) {
       this.team.members.splice(index, 1);
     }
+  }
+
+  getCompanyId() {
+    return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
 }
