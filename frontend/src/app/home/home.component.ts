@@ -10,7 +10,6 @@ import { ApiService, BasicUser, Announcement } from "../../services/api.service"
 export class HomeComponent implements OnInit {
 
   @ViewChild(AnnouncementOverlayComponent) overlay!: AnnouncementOverlayComponent;
-  // announcements = [{ user: '', date: '', description: '' }]
   announcements: any[] = []
   userData: BasicUser | undefined;
   companyId = -1;
@@ -93,6 +92,7 @@ export class HomeComponent implements OnInit {
       .then(data => {
 
         if (Array.isArray(data)) {
+          data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
           data.forEach(item => {
             this.announcements.push({
               user: item.author.profile.firstName + " " + item.author.profile.lastName,
@@ -112,8 +112,8 @@ export class HomeComponent implements OnInit {
    async addNewAnnouncement(title: string,message: string) {
     this.newAnnouncement.title = title;
     this.newAnnouncement.message = message;
-    console.log(this.newAnnouncement)
     await this.apiService.createAnnouncement(this.newAnnouncement, this.companyId);
+    this.announcements = []
     this.loadAllAnnouncements();
   }
 }
