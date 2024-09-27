@@ -60,6 +60,12 @@ export interface Company {
   description: string;
 }
 
+export interface ProjectRequest {
+    name: string,
+    description: string,
+    active: boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,6 +73,7 @@ export class ApiService {
 
   private userData: BasicUser | undefined;
   private teamData: Team | undefined;
+  private projectData: Project | undefined;
 
   constructor(private http: HttpClient) { }
 
@@ -160,6 +167,19 @@ export class ApiService {
 
     let response = await this.http.post<BasicUser>(usersUrl + `/create`, body, { headers: headers }).toPromise();
     this.userData = response;
+    return response
+  }
+
+  async createProject(newProject: ProjectRequest, companyId: number, teamId: number) {
+
+    const body = JSON.stringify(newProject);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json' // Set the proper header
+  });
+
+    let response = await this.http.post<Project>(companyUrl + `/${companyId}/teams/${teamId}/projects`, body, { headers: headers }).toPromise();
+    this.projectData = response;
     return response
   }
 

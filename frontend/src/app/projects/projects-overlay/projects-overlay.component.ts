@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
 import { ProjectsComponent } from "../projects.component";
+import { ApiService } from 'src/services/api.service';
 import Project from 'src/app/models/project';
+
+export interface ProjectRequest {
+  name: string,
+  description: string,
+  active: boolean
+}
 
 @Component({
   selector: 'app-projects-overlay',
@@ -10,13 +17,16 @@ import Project from 'src/app/models/project';
 export class ProjectsOverlayComponent {
   isHidden = false;
   edit = false;
+  projects: Project[] = []
   project: Project = {name: '', description: '', active: true}
+
   selectedStatus: boolean | null = null
 
-  constructor(private projectsComponent: ProjectsComponent) {}
+  constructor(private projectsComponent: ProjectsComponent, private apiService: ApiService) {}
 
 
-  open(edit: boolean) {
+  open(edit: boolean, projects: Project[]) {
+    this.projects = projects
     this.isHidden = true;
     this.edit = edit;
   }
@@ -42,7 +52,8 @@ export class ProjectsOverlayComponent {
     if (this.edit) {
       this.projectsComponent.updateProject(this.project)
     } else {
-      // Create a new project method goes here
+      this.projects.push(this.project)
+      this.create()
     }
 
     this.close()
@@ -50,6 +61,20 @@ export class ProjectsOverlayComponent {
 
   checkEmptyFields() {
     return Object.values(this.project).some(value => value === '' || value === null);
+  }
+
+  create() {
+    let createProject: ProjectRequest = {
+      name: this.project.name,
+      description: this.project.description,
+      active: this.project.active
+    }
+    this.apiService.createProject(createProject,Number(this.getCompanyId()),Number(localStorage.getItem("currTeam")))
+      .then(data => console.log(data))
+  }
+
+  getCompanyId() {
+    return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
 
   

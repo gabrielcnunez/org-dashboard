@@ -10,6 +10,7 @@ import { ApiService } from 'src/services/api.service';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent {
+  isAdmin: boolean = (localStorage.getItem('admin') == "true");
   projects: Project[] = []
 
   @ViewChild(ProjectsOverlayComponent) overlay!: ProjectsOverlayComponent;
@@ -44,7 +45,7 @@ export class ProjectsComponent {
   }
 
   newProject() {
-    this.overlay.open(false);
+    this.overlay.open(false, this.projects);
     if (!this.overlay.checkEmptyFields()) {
       console.log(this.overlay.project)
       this.projects.push(this.overlay.project)
@@ -53,7 +54,7 @@ export class ProjectsComponent {
   }
 
   editProject(project: Project) {
-    this.overlay.open(true);
+    this.overlay.open(true,this.projects);
     this.overlay.project = project;
     
   }

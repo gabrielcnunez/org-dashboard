@@ -21,8 +21,8 @@
             </div>
           </div>
       </div>
-      <!-- button only displays for admins -->
-      <button class="add-button" (click) = "onSubmit()">
+      
+      <button *ngIf = "isAdmin" class="add-button" (click) = "onSubmit()">
         New Team
         <div class="plus"></div>
       </button>

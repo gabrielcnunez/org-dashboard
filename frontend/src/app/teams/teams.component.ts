@@ -13,6 +13,7 @@ import Team from '../models/team';
   
 })
 export class TeamsComponent {
+  isAdmin: boolean = (localStorage.getItem('admin') == "true");
   teams: Team[] = []
 
   @ViewChild(TeamsOverlayComponent) overlay!: TeamsOverlayComponent;
