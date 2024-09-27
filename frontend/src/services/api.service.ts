@@ -54,6 +54,12 @@ export interface Announcement {
   author: BasicUser;
 }
 
+export interface Company {
+  id: number;
+  name: string;
+  description: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -116,6 +122,13 @@ export class ApiService {
     });
 
     let response = await this.http.get<BasicUser[]>(usersUrl, { headers: headers }).toPromise();
+
+    return response ?? [];
+  }
+
+  async getAllCompanies(): Promise<Company[]> {
+
+    let response = await this.http.get<Company[]>(companyUrl + `/all`).toPromise();
 
     return response ?? [];
   }

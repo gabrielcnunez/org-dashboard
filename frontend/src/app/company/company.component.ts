@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
+import { ApiService, Company } from 'src/services/api.service';
 
 @Component({
   selector: 'app-company',
@@ -8,12 +9,23 @@ import { Router } from "@angular/router";
 })
 export class CompanyComponent {
 
-  companies = [
-    { id: 6, name: 'Waystar|ROYCO' },
-    { id: 7, name: 'Cook Systems' }
+  companies: Company[] = [
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getAllCompanies()
+      .then(data => {this.companies = data})
+      .catch((error) => console.log(error));
+  }
+
+
+  async getAllCompanies() {
+    this.apiService.getAllCompanies()
+    .then(data => this.companies = data)
+    .catch((error) => console.log(error));
+  }
 
   onClick(item: number) {
     //change the stored companyId to the one that user selected
