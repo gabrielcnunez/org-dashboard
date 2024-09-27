@@ -8,6 +8,8 @@ import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.exceptions.ConflictException;
 import com.cooksys.groupfinal.mappers.BasicUserMapper;
+import com.cooksys.groupfinal.mappers.CompanyMapper;
+import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final BasicUserMapper basicUserMapper;
 	private final CredentialsMapper credentialsMapper;
     private final CompanyService companyService;
+    private final CompanyRepository companyRepository;
 
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -124,8 +127,12 @@ public class UserServiceImpl implements UserService {
         Set<Company> companies = created.getCompanies();
         companies.add(company);
         created.setCompanies(companies);
-
-        return basicUserMapper.entityToBasicUserDto(userRepository.saveAndFlush(created));
+        Set<User> employees = company.getEmployees();
+        employees.add(created);
+        company.setEmployees(employees);
+        BasicUserDto result = basicUserMapper.entityToBasicUserDto(userRepository.saveAndFlush(created));
+        companyRepository.saveAndFlush(company);
+        return result;
     }
 
     @Override
