@@ -39,9 +39,22 @@ export class UsersComponent implements OnInit {
   }
 
   async getAllUsers() {
-    this.apiService.getUsers(this.adminCredentials)
+    this.apiService.getCompanyUsers(this.companyId)
+    // this.apiService.getUsers(this.adminCredentials)
     .then(data => {
-      this.users = data;
+
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          this.users.push({
+            id: item.id,
+            profile: item.profile,
+            active: item.active,
+            admin: item.admin,
+            status: item.status,
+          });
+        });
+      }
+
     })
     .then(() => this.showUsers = true)
     .then(() => console.log(this.users))
