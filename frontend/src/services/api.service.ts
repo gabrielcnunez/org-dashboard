@@ -95,16 +95,20 @@ export class ApiService {
     return response ?? [];
   }
 
-  async postUserLogin(credentials: Credentials) {
-
+  async postUserLogin(credentials: Credentials): Promise<BasicUser | undefined> {
     const body = {
       username: credentials.username,
-      password: credentials.password
+      password: credentials.password,
     };
-
-    let response = await this.http.post<BasicUser>(usersUrl + `/login`, body).toPromise();
-    this.userData = response;
-    return response
+  
+    try {
+      let response = await this.http.post<BasicUser>(usersUrl + `/login`, body).toPromise();
+      this.userData = response;
+      return response;
+    } catch (error) {
+      console.error("Error during login request:", error);
+      return undefined;
+    }
   }
 
 
