@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../services/api.service';
+import { ApiService, Company } from '../../services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -49,14 +49,22 @@ export class LoginComponent implements OnInit {
   }
 
   private saveUserToLocalStorage() {
-    localStorage.setItem('admin', JSON.stringify(this.userData.admin));
-  
+
     const credentials = {
       username: this.username,
       password: this.password
     };
-    localStorage.setItem('credentials', JSON.stringify(credentials));
 
+    const companyData = this.userData.companies;
+    let companies: number[] = [];
+
+    if (companyData !== undefined && companyData !== null) {
+      this.userData.companies.map((company: Company) => companies.push(company.id))
+    }
+
+    localStorage.setItem('admin', JSON.stringify(this.userData.admin));
+    localStorage.setItem('credentials', JSON.stringify(credentials));
+    localStorage.setItem('companies', JSON.stringify(companies));
     localStorage.setItem('companyId', JSON.stringify(this.userData.companies[0].id));
     localStorage.setItem('userId', JSON.stringify(this.userData.id));
     localStorage.setItem('firstName', JSON.stringify(this.userData.profile.firstName));
