@@ -28,7 +28,7 @@ export class AnnouncementOverlayComponent {
     }
 
     // console.log('New Announcement:', this.announcement);
-    this.homeComponent.addNewAnnouncement(this.announcement.message);
+    this.homeComponent.addNewAnnouncement(this.announcement.title, this.announcement.message);
     this.close();
   }
 }

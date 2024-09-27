@@ -20,6 +20,7 @@ import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.AnnouncementService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +45,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
+	@Transactional
 	public AnnouncementDto createAnnouncement(AnnouncementDto announcementDto, Long companyId) {
 	    if (announcementDto.getTitle() == null || announcementDto.getTitle().isEmpty()) {
 	        throw new BadRequestException("Announcement title cannot be empty");
