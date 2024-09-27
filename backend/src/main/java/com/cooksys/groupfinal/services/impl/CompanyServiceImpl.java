@@ -92,7 +92,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Company company = findCompany(id);
 		Set<User> filteredUsers = new HashSet<>();
 		company.getEmployees().forEach(filteredUsers::add);
-		filteredUsers.removeIf(user -> !user.isActive());
+		//filteredUsers.removeIf(user -> !user.isActive());
 		return fullUserMapper.entitiesToFullUserDtos(filteredUsers);
 	}
 

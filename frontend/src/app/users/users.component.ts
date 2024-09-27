@@ -39,8 +39,8 @@ export class UsersComponent implements OnInit {
   }
 
   async getAllUsers() {
-    //this.apiService.getCompanyUsers(this.companyId)
-     this.apiService.getUsers(this.adminCredentials)
+    this.apiService.getCompanyUsers(this.companyId)
+     //this.apiService.getUsers(this.adminCredentials)
     .then(data => {
 
       if (Array.isArray(data)) {
