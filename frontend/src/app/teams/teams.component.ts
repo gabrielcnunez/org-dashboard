@@ -6,7 +6,6 @@ import Team from '../models/team';
 
 
 
-
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',

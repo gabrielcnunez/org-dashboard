@@ -3,6 +3,19 @@ import Team from 'src/app/models/team';
 import { ApiService } from 'src/services/api.service';
 import { TeamsComponent } from '../teams.component';
 
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
+export interface CreateTeam {
+  credentials: Credentials,
+  name: string,
+  description: string,
+  teammateIds: number[],
+  companyId: number
+}
+
 @Component({
   selector: 'app-teams-overlay',
   templateUrl: './teams-overlay.component.html',
@@ -12,7 +25,7 @@ export class TeamsOverlayComponent {
   isHidden = false;
   teams: Team[] = []
   team: Team = {name: '', description: '', members: [], projectCount: 0}
-  availableUsers = [{ profile: {firstName: '', lastName: '', email: ''}, active: false, admin: false, status: '' }];
+  availableUsers = [{id: "", profile: {firstName: '', lastName: '', email: ''}, active: false, admin: false, status: '' }];
 
   constructor(private apiService: ApiService) {}
 
@@ -21,13 +34,13 @@ export class TeamsOverlayComponent {
   }
 
   loadAllUsers() {
-    // number "6" will be replaced with current company 
     this.availableUsers.pop()
     this.apiService.getCompanyUsers(this.getCompanyId())
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach(item => {
             this.availableUsers.push({
+              id: item.id,
               profile: {firstName: item.profile.firstName,
                 lastName: item.profile.lastName,
                 email: item.profile.email,},
@@ -62,13 +75,22 @@ export class TeamsOverlayComponent {
     this.teams.push(this.team)
     
     // add team to backend
+    this.create()
     this.team = {name: '', description: '', members: [], projectCount: 0}
     this.close()
     
   }
 
   create() {
-    
+    let createTeam: CreateTeam = {
+    credentials : JSON.parse(String(localStorage.getItem("credentials"))),
+    name : this.team.name,
+    teammateIds : this.team.members.map(member => Number(member.id)),
+    description : this.team.description,
+    companyId : this.getCompanyId()
+    }
+    this.apiService.addNewTeam(createTeam)
+      .then(data => console.log(data))
   }
 
   checkEmptyFields() {
