@@ -14,7 +14,7 @@
             </div>
             <hr>
             <p style="color:grey; background-color: #0B2D45;">Members</p>
-            <div style ="display: flex; flex-direction: row;width: 313px; flex-wrap: wrap; background-color: #0B2D45;">
+            <div class="members-container">
               <div style="background-color: #0B2D45;" *ngFor="let member of team.members" >
                 <div class="card-content-member" >{{member.profile.firstName + " " + member.profile.lastName[0] +"."}}</div>
               </div>
