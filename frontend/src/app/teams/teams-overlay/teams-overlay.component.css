@@ -18,7 +18,7 @@
   }
   
   form div {
-    margin-bottom: 2em;
+    margin-bottom: .25em;
   }
   
   label {
@@ -63,6 +63,7 @@
     background-color: white;
     color: #1BA098;
     padding: 1em;
+    margin-bottom: .25em;
     font-size: 1em;
     font-weight: bold;
     border: none;
@@ -80,7 +81,7 @@
     display: none;
     position: absolute;
     background-color: #0b2d45;
-    
+    text-align: left;
     min-width: 10em;
     z-index: 1;
   }
