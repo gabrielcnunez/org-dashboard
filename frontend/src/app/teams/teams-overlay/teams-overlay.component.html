@@ -23,7 +23,7 @@
         <button class="dropbtn">Pick an option</button>
   
         <div class="dropdown-content">
-          <div *ngFor="let user of availableUsers"><a (click)="addMember(user.profile.firstName)">{{user.profile.firstName + " " + user.profile.lastName[0] + "."}}</a></div>
+          <div *ngFor="let user of availableUsers"><a (click)="addMember(user.id)">{{user.profile.firstName + " " + user.profile.lastName[0] + "."}}</a></div>
         </div>
   
       </div>

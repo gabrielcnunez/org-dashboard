@@ -97,9 +97,14 @@ export class TeamsOverlayComponent {
     return Object.values(this.team).some(value => value === '' || value === null);
   }
   
-  addMember(member: string) {
-    
-    this.team.members.push(this.availableUsers.filter((user) => user.profile.firstName == member)[0])
+  addMember(memberId: string) {
+    const selectedMember = this.availableUsers.find((user) => user.id === memberId);
+
+    if (selectedMember && !this.team.members.some((m) => m.id === selectedMember.id)) {
+      this.team.members.push(selectedMember);
+    } else {
+      console.log("Member is already in the team or does not exist.");
+    }
   }
 
 
