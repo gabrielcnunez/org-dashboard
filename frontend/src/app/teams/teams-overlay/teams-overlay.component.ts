@@ -97,14 +97,20 @@ export class TeamsOverlayComponent {
     return Object.values(this.team).some(value => value === '' || value === null);
   }
   
-  addMember(member: string) {
-    
-    this.team.members.push(this.availableUsers.filter((user) => user.profile.firstName == member)[0])
+  addMember(memberId: string) {
+    const selectedMember = this.availableUsers.find((user) => user.id === memberId);
+
+    if (selectedMember && !this.team.members.some((m) => m.id === selectedMember.id)) {
+      this.team.members.push(selectedMember);
+    } else {
+      console.log("Member is already in the team or does not exist.");
+    }
   }
 
 
-  removeMember(member: string) {
-    const index = this.team.members.indexOf(this.team.members.filter((user) =>user.profile.firstName == member)[0], 0);
+  removeMember(memberId: string) {
+    const index = this.team.members.findIndex((user) => user.id === memberId);
+    
     if (index > -1) {
       this.team.members.splice(index, 1);
     }

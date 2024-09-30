@@ -16,16 +16,27 @@
 
 }
 
+.members-container {
+  display: flex;
+  flex-direction: row;
+  width: 313px;
+  flex-wrap: wrap;
+  background-color: #0B2D45;
+  justify-content: center;
+}
+
 .card-content-member {
   background-color: #1BA098;
   font-size: medium;
   color: white;
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
   width: 103px;
   height: 32px;
-  margin: 5px;
+  margin: 10px;
   text-align: center;
 }
 

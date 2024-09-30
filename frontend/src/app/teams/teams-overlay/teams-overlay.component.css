@@ -18,7 +18,7 @@
   }
   
   form div {
-    margin-bottom: 2em;
+    margin-bottom: .25em;
   }
   
   label {
@@ -63,6 +63,7 @@
     background-color: white;
     color: #1BA098;
     padding: 1em;
+    margin-bottom: .25em;
     font-size: 1em;
     font-weight: bold;
     border: none;
@@ -80,7 +81,7 @@
     display: none;
     position: absolute;
     background-color: #0b2d45;
-    
+    text-align: left;
     min-width: 10em;
     z-index: 1;
   }
@@ -101,6 +102,7 @@
   
   .dropdown:hover .dropdown-content {
     display: block;
+    cursor: pointer;
   }
   
   .dropdown:hover .dropbtn {
@@ -109,10 +111,14 @@
   }
 
   .card-content-member {
-    position:relative;
+    position: relative;
     background-color: #1BA098;
     font-size: medium;
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px;
     width: 103px;
     height: 32px;
