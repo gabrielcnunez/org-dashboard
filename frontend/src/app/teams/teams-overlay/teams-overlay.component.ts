@@ -108,8 +108,9 @@ export class TeamsOverlayComponent {
   }
 
 
-  removeMember(member: string) {
-    const index = this.team.members.indexOf(this.team.members.filter((user) =>user.profile.firstName == member)[0], 0);
+  removeMember(memberId: string) {
+    const index = this.team.members.findIndex((user) => user.id === memberId);
+    
     if (index > -1) {
       this.team.members.splice(index, 1);
     }
