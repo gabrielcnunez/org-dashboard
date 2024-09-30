@@ -101,6 +101,7 @@
   
   .dropdown:hover .dropdown-content {
     display: block;
+    cursor: pointer;
   }
   
   .dropdown:hover .dropbtn {
@@ -109,10 +110,14 @@
   }
 
   .card-content-member {
-    position:relative;
+    position: relative;
     background-color: #1BA098;
     font-size: medium;
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px;
     width: 103px;
     height: 32px;
