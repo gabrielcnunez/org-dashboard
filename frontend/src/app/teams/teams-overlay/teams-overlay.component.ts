@@ -101,7 +101,7 @@ export class TeamsOverlayComponent {
   }
 
   checkEmptyFields() {
-    return Object.values(this.team).some(value => value === '' || value === null);
+    return Object.values(this.team).some(value => value === '' || value === null) || this.team.members.length === 0;
   }
   
   addMember(memberId: string) {
