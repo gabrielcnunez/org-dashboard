@@ -8,6 +8,10 @@ export interface Credentials {
   password: string;
 }
 
+export interface Member {
+  id: number
+}
+
 export interface CreateTeam {
   credentials: Credentials,
   name: string,
@@ -26,6 +30,8 @@ export class TeamsOverlayComponent {
   teams: Team[] = []
   team: Team = {name: '', description: '', members: [], projectCount: 0}
   availableUsers = [{id: "", profile: {firstName: '', lastName: '', email: ''}, active: false, admin: false, status: '' }];
+  error: boolean = false;
+  errorMessage: string = ''
 
   constructor(private apiService: ApiService) {}
 
@@ -69,32 +75,50 @@ export class TeamsOverlayComponent {
 
   onSubmit() {
     if (this.checkEmptyFields()) {
-      console.log("empty fields")
+      this.error = true;
+      this.errorMessage = 'Teams must have a name, description, and at least one member!'
       return;
     }
+    if (!this.validateTeam(this.team.members)) {
+      this.error = true;
+      this.errorMessage = 'This team already exists! Please update members to create a unique team.'
+      return
+    }
+
     this.teams.push(this.team)
-    
-    // add team to backend
     this.create()
-    this.team = {name: '', description: '', members: [], projectCount: 0}
-    this.close()
-    
+      .then(() => {
+        this.team = {name: '', description: '', members: [], projectCount: 0}
+        this.close()
+    }).catch((error) => {
+        console.error('Error during team creation:', error);
+        this.error = true;
+        this.errorMessage = 'Error creating team, please try again.';
+    })
   }
 
-  create() {
+  create(): Promise<void> {
     let createTeam: CreateTeam = {
-    credentials : JSON.parse(String(localStorage.getItem("credentials"))),
-    name : this.team.name,
-    teammateIds : this.team.members.map(member => Number(member.id)),
-    description : this.team.description,
-    companyId : this.getCompanyId()
+      credentials : JSON.parse(String(localStorage.getItem("credentials"))),
+      name : this.team.name,
+      teammateIds : this.team.members.map(member => Number(member.id)),
+      description : this.team.description,
+      companyId : this.getCompanyId()
     }
-    this.apiService.addNewTeam(createTeam)
-      .then(data => console.log(data))
+
+    return this.apiService.addNewTeam(createTeam)
+      .then(data => {
+        console.log('Team created successfully:', data)})
+      .catch(error => {
+        console.error('Error during team creation:', error);
+        throw error
+      })
   }
 
   checkEmptyFields() {
-    return Object.values(this.team).some(value => value === '' || value === null);
+    this.error = false;
+    this.errorMessage = '';
+    return Object.values(this.team).some(value => value === '' || value === null) || this.team.members.length === 0;
   }
   
   addMember(memberId: string) {
@@ -114,6 +138,23 @@ export class TeamsOverlayComponent {
     if (index > -1) {
       this.team.members.splice(index, 1);
     }
+  }
+
+  validateTeam(members: Member[]) {
+    this.error = false;
+    this.errorMessage = '';
+    const memberIds = members.map(member => Number(member.id)).sort((a,b) => a-b)
+    for (const team of this.teams) {
+      const teamIds = team.members.map(member => Number(member.id)).sort((a,b) => a-b)
+      if (
+        memberIds.length === teamIds.length &&
+        memberIds.every((e, i) => e === teamIds[i])) {
+          this.error = true;
+          return false;
+        }
+    }
+
+    return true;
   }
 
   getCompanyId() {
