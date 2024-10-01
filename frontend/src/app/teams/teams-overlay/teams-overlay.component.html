@@ -2,8 +2,8 @@
   
   <div class="overlay-content">
 
-    <div *ngIf="creationError" class="error-message">
-      This team already exists! Please change the members to create a unique team.
+    <div *ngIf="error" class="error-message">
+      {{ errorMessage }}
     </div>
 
     <form (ngSubmit)="onSubmit()">

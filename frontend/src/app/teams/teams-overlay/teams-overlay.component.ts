@@ -30,7 +30,8 @@ export class TeamsOverlayComponent {
   teams: Team[] = []
   team: Team = {name: '', description: '', members: [], projectCount: 0}
   availableUsers = [{id: "", profile: {firstName: '', lastName: '', email: ''}, active: false, admin: false, status: '' }];
-  creationError: boolean = false;
+  error: boolean = false;
+  errorMessage: string = ''
 
   constructor(private apiService: ApiService) {}
 
@@ -74,11 +75,13 @@ export class TeamsOverlayComponent {
 
   onSubmit() {
     if (this.checkEmptyFields()) {
-      console.log("empty fields")
+      this.error = true;
+      this.errorMessage = 'Teams must have a name, description, and at least one member!'
       return;
     }
     if (!this.validateTeam(this.team.members)) {
-      this.creationError = true;
+      this.error = true;
+      this.errorMessage = 'This team already exists! Please update members to create a unique team.'
       return
     }
 
@@ -101,6 +104,8 @@ export class TeamsOverlayComponent {
   }
 
   checkEmptyFields() {
+    this.error = false;
+    this.errorMessage = '';
     return Object.values(this.team).some(value => value === '' || value === null) || this.team.members.length === 0;
   }
   
@@ -124,14 +129,15 @@ export class TeamsOverlayComponent {
   }
 
   validateTeam(members: Member[]) {
-    this.creationError = false;
+    this.error = false;
+    this.errorMessage = '';
     const memberIds = members.map(member => Number(member.id)).sort((a,b) => a-b)
     for (const team of this.teams) {
       const teamIds = team.members.map(member => Number(member.id)).sort((a,b) => a-b)
       if (
         memberIds.length === teamIds.length &&
         memberIds.every((e, i) => e === teamIds[i])) {
-          this.creationError = true;
+          this.error = true;
           return false;
         }
     }
