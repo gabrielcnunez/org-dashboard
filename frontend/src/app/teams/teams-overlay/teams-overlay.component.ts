@@ -87,20 +87,32 @@ export class TeamsOverlayComponent {
 
     this.teams.push(this.team)
     this.create()
-    this.team = {name: '', description: '', members: [], projectCount: 0}
-    this.close()
+      .then(() => {
+        this.team = {name: '', description: '', members: [], projectCount: 0}
+        this.close()
+    }).catch((error) => {
+        console.error('Error during team creation:', error);
+        this.error = true;
+        this.errorMessage = 'Error creating team, please try again.';
+    })
   }
 
-  create() {
+  create(): Promise<void> {
     let createTeam: CreateTeam = {
-    credentials : JSON.parse(String(localStorage.getItem("credentials"))),
-    name : this.team.name,
-    teammateIds : this.team.members.map(member => Number(member.id)),
-    description : this.team.description,
-    companyId : this.getCompanyId()
+      credentials : JSON.parse(String(localStorage.getItem("credentials"))),
+      name : this.team.name,
+      teammateIds : this.team.members.map(member => Number(member.id)),
+      description : this.team.description,
+      companyId : this.getCompanyId()
     }
-    this.apiService.addNewTeam(createTeam)
-      .then(data => console.log(data))
+
+    return this.apiService.addNewTeam(createTeam)
+      .then(data => {
+        console.log('Team created successfully:', data)})
+      .catch(error => {
+        console.error('Error during team creation:', error);
+        throw error
+      })
   }
 
   checkEmptyFields() {
