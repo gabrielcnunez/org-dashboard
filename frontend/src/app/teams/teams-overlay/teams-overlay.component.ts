@@ -8,6 +8,10 @@ export interface Credentials {
   password: string;
 }
 
+export interface Member {
+  id: number
+}
+
 export interface CreateTeam {
   credentials: Credentials,
   name: string,
@@ -26,6 +30,7 @@ export class TeamsOverlayComponent {
   teams: Team[] = []
   team: Team = {name: '', description: '', members: [], projectCount: 0}
   availableUsers = [{id: "", profile: {firstName: '', lastName: '', email: ''}, active: false, admin: false, status: '' }];
+  creationError: boolean = false;
 
   constructor(private apiService: ApiService) {}
 
@@ -72,13 +77,15 @@ export class TeamsOverlayComponent {
       console.log("empty fields")
       return;
     }
+    if (!this.validateTeam(this.team.members)) {
+      this.creationError = true;
+      return
+    }
+
     this.teams.push(this.team)
-    
-    // add team to backend
     this.create()
     this.team = {name: '', description: '', members: [], projectCount: 0}
     this.close()
-    
   }
 
   create() {
@@ -114,6 +121,22 @@ export class TeamsOverlayComponent {
     if (index > -1) {
       this.team.members.splice(index, 1);
     }
+  }
+
+  validateTeam(members: Member[]) {
+    this.creationError = false;
+    const memberIds = members.map(member => Number(member.id)).sort((a,b) => a-b)
+    for (const team of this.teams) {
+      const teamIds = team.members.map(member => Number(member.id)).sort((a,b) => a-b)
+      if (
+        memberIds.length === teamIds.length &&
+        memberIds.every((e, i) => e === teamIds[i])) {
+          this.creationError = true;
+          return false;
+        }
+    }
+
+    return true;
   }
 
   getCompanyId() {
