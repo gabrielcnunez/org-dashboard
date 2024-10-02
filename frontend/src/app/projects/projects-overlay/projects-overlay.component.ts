@@ -24,7 +24,6 @@ export class ProjectsOverlayComponent {
 
   constructor(private projectsComponent: ProjectsComponent, private apiService: ApiService) {}
 
-
   open(edit: boolean, projects: Project[]) {
     this.projects = projects
     this.isHidden = true;
@@ -51,12 +50,10 @@ export class ProjectsOverlayComponent {
 
     if (this.edit) {
       this.projectsComponent.updateProject(this.project)
+      this.close()
     } else {
-      this.projects.push(this.project)
       this.create()
     }
-
-    this.close()
   }
 
   checkEmptyFields() {
@@ -64,18 +61,33 @@ export class ProjectsOverlayComponent {
   }
 
   create() {
-    let createProject: ProjectRequest = {
+    const createProject: ProjectRequest = {
       name: this.project.name,
       description: this.project.description,
       active: this.project.active
     }
-    this.apiService.createProject(createProject,Number(this.getCompanyId()),Number(localStorage.getItem("currTeam")))
-      .then(data => console.log(data))
+    this.apiService.createProject(createProject, Number(this.getCompanyId()), Number(localStorage.getItem("currTeam")))
+    .then(data => {
+      if (data) {
+        const newProject = {
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          active: data.active,
+          teamId: data.team.id
+        };
+        this.projects.unshift(newProject);
+        console.log('Project created successfully:', newProject);
+        this.close()
+      }
+    })
+    .catch(error => {
+      console.error('Error creating project:', error);
+    });
   }
 
   getCompanyId() {
     return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
 
-  
 }

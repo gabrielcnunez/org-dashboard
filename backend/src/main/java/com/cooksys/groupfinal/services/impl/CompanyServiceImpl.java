@@ -2,7 +2,6 @@ package com.cooksys.groupfinal.services.impl;
 
 import java.util.ArrayList;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -38,10 +37,6 @@ public class CompanyServiceImpl implements CompanyService {
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
 	private final CompanyMapper companyMapper;
-
-	public List<CompanyResponseDto> getAllCompanies() {
-		return companyMapper.entitiesToDtos(companyRepository.findAllByOrderByNameAsc());
-	}
 	
 	public Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
@@ -88,11 +83,15 @@ public class CompanyServiceImpl implements CompanyService {
     }
 	
 	@Override
+	public List<CompanyResponseDto> getAllCompanies() {
+		return companyMapper.entitiesToDtos(companyRepository.findAllByOrderByNameAsc());
+	}
+	
+	@Override
 	public Set<FullUserDto> getAllUsers(Long id) {
 		Company company = findCompany(id);
 		Set<User> filteredUsers = new HashSet<>();
 		company.getEmployees().forEach(filteredUsers::add);
-		//filteredUsers.removeIf(user -> !user.isActive());
 		return fullUserMapper.entitiesToFullUserDtos(filteredUsers);
 	}
 
@@ -112,12 +111,10 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId) {
+	public List<ProjectResponseDto> getAllProjects(Long companyId, Long teamId) {
 		Team team = findTeamInCompany(companyId, teamId);
-		Set<Project> filteredProjects = new HashSet<>();
-		team.getProjects().forEach(filteredProjects::add);
-//		filteredProjects.removeIf(project -> !project.isActive()); <-- Leaving .removeIf method commented out in case FE wants to use it
-		return projectMapper.entitiesToDtos(filteredProjects);
+		List<Project> sortedProjects = projectRepository.findProjectsByTeamSorted(team.getId());
+		return projectMapper.entitiesToDtos(sortedProjects);
 	}
 
 	@Override

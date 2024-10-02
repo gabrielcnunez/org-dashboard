@@ -16,7 +16,7 @@ public interface CompanyService {
 
 	Set<TeamDto> getAllTeams(Long id);
 
-	Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId);
+	List<ProjectResponseDto> getAllProjects(Long companyId, Long teamId);
 
 	ProjectResponseDto getProject(Long companyId, Long teamId, Long projectId);
 

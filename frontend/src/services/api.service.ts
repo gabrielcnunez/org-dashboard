@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient,HttpHeaders} from '@angular/common/http';
-import Project from '../app/models/project';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import Project from 'src/app/models/project';
 import Team from 'src/app/models/team';
 
 const usersUrl = 'http://localhost:8080/users'
@@ -66,6 +66,14 @@ export interface ProjectRequest {
     active: boolean
 }
 
+export interface ProjectResponse {
+  id?: number
+  name: string
+  description: string
+  active: boolean
+  team: Team
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -112,8 +120,8 @@ export class ApiService {
     const body = JSON.stringify(newTeam);
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json' // Set the proper header
-  });
+      'Content-Type': 'application/json'
+    });
 
     let response = await this.http.post<Team>(teamUrl + `/create`, body, { headers: headers }).toPromise();
     this.teamData = response;
@@ -161,8 +169,8 @@ export class ApiService {
     const body = JSON.stringify(newUser);
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json' // Set the proper header
-  });
+      'Content-Type': 'application/json'
+    });
 
     let response = await this.http.post<BasicUser>(usersUrl + `/create`, body, { headers: headers }).toPromise();
     this.userData = response;
@@ -170,16 +178,13 @@ export class ApiService {
   }
 
   async createProject(newProject: ProjectRequest, companyId: number, teamId: number) {
-
-    const body = JSON.stringify(newProject);
-
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json' // Set the proper header
-  });
+      'Content-Type': 'application/json'
+    });
 
-    let response = await this.http.post<Project>(companyUrl + `/${companyId}/teams/${teamId}/projects`, body, { headers: headers }).toPromise();
-    this.projectData = response;
-    return response
+    return this.http
+      .post<ProjectResponse>(companyUrl + `/${companyId}/teams/${teamId}/projects`, newProject, { headers: headers })
+      .toPromise();
   }
 
   async createAnnouncement(newAnnouncement: Announcement, companyId: number) {

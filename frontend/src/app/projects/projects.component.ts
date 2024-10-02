@@ -51,7 +51,6 @@ export class ProjectsComponent {
     if (!this.overlay.checkEmptyFields()) {
       console.log(this.overlay.project)
       this.projects.push(this.overlay.project)
-      // add project to backend
     }
   }
 
@@ -81,6 +80,7 @@ export class ProjectsComponent {
       }
     }
   }
+
   getCompanyId() {
     return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
