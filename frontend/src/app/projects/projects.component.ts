@@ -69,6 +69,7 @@ export class ProjectsComponent {
       const updatedProject = this.overlay.project;
 
       if (teamId !== undefined && projectId !== undefined) {
+        console.log('Inside undefined fields conditional')
         this.apiService.updateProject(companyId, teamId, projectId, updatedProject)
         .then(() => {
           let i: number = this.projects.indexOf(project);
@@ -81,6 +82,7 @@ export class ProjectsComponent {
       }
     }
   }
+
   getCompanyId() {
     return JSON.parse(localStorage.getItem("companyId") ?? "-1");
   }
