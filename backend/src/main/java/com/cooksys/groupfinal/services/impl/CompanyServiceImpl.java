@@ -112,12 +112,11 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Set<ProjectResponseDto> getAllProjects(Long companyId, Long teamId) {
+	public List<ProjectResponseDto> getAllProjects(Long companyId, Long teamId) {
 		Team team = findTeamInCompany(companyId, teamId);
-		Set<Project> filteredProjects = new HashSet<>();
-		team.getProjects().forEach(filteredProjects::add);
-//		filteredProjects.removeIf(project -> !project.isActive()); <-- Leaving .removeIf method commented out in case FE wants to use it
-		return projectMapper.entitiesToDtos(filteredProjects);
+		List<Project> sortedProjects = new ArrayList<Project>(team.getProjects());
+		sortedProjects.sort(Comparator.comparing(Project::getId).reversed());
+		return projectMapper.entitiesToDtos(sortedProjects);
 	}
 
 	@Override

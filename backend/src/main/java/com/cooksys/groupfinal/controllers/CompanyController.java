@@ -52,7 +52,7 @@ public class CompanyController {
 	
 	@GetMapping("/{companyId}/teams/{teamId}/projects") 
 	@CrossOrigin(origins="*")
-	public Set<ProjectResponseDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
+	public List<ProjectResponseDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
 	}
 	

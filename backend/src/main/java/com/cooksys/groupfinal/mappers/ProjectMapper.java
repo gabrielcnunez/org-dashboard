@@ -1,6 +1,6 @@
 package com.cooksys.groupfinal.mappers;
 
-import java.util.Set;
+import java.util.List;
 
 import org.mapstruct.Mapper;
 
@@ -15,6 +15,6 @@ public interface ProjectMapper {
 	
 	ProjectResponseDto entityToDto(Project project);
 
-    Set<ProjectResponseDto> entitiesToDtos(Set<Project> projects);
+    List<ProjectResponseDto> entitiesToDtos(List<Project> projects);
 
 }
