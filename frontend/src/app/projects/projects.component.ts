@@ -51,7 +51,6 @@ export class ProjectsComponent {
     if (!this.overlay.checkEmptyFields()) {
       console.log(this.overlay.project)
       this.projects.push(this.overlay.project)
-      // add project to backend
     }
   }
 
@@ -69,7 +68,6 @@ export class ProjectsComponent {
       const updatedProject = this.overlay.project;
 
       if (teamId !== undefined && projectId !== undefined) {
-        console.log('Inside undefined fields conditional')
         this.apiService.updateProject(companyId, teamId, projectId, updatedProject)
         .then(() => {
           let i: number = this.projects.indexOf(project);

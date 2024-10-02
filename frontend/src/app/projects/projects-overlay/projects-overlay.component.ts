@@ -61,7 +61,7 @@ export class ProjectsOverlayComponent {
   }
 
   create() {
-    let createProject: ProjectRequest = {
+    const createProject: ProjectRequest = {
       name: this.project.name,
       description: this.project.description,
       active: this.project.active
@@ -69,15 +69,14 @@ export class ProjectsOverlayComponent {
     this.apiService.createProject(createProject, Number(this.getCompanyId()), Number(localStorage.getItem("currTeam")))
     .then(data => {
       if (data) {
-        let newProject = {
+        const newProject = {
           id: data.id,
           name: data.name,
           description: data.description,
           active: data.active,
           teamId: data.team.id
         };
-        this.projects.push(newProject);
-        console.log(this.projects)
+        this.projects.unshift(newProject);
         console.log('Project created successfully:', newProject);
         this.close()
       }
