@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import Project from '../app/models/project';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import Project from 'src/app/models/project';
 import Team from 'src/app/models/team';
 
 const usersUrl = 'http://localhost:8080/users'
@@ -178,17 +178,13 @@ export class ApiService {
   }
 
   async createProject(newProject: ProjectRequest, companyId: number, teamId: number) {
-    const body = JSON.stringify(newProject);
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    const response = await this.http.post<ProjectResponse>(companyUrl + `/${companyId}/teams/${teamId}/projects`, body, { headers: headers }).toPromise();
-    if (!response) {
-      throw new Error('Failed to create project')
-    }
-    this.projectData = response;
-    return response
+
+    return this.http
+      .post<ProjectResponse>(companyUrl + `/${companyId}/teams/${teamId}/projects`, newProject, { headers: headers })
+      .toPromise();
   }
 
   async createAnnouncement(newAnnouncement: Announcement, companyId: number) {
